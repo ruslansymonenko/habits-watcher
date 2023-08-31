@@ -5,5 +5,7 @@
   "tabWidth": 2,
   "bracketSpacing": true,
   "jsxSingleQuote": false,
-  "printWidth": 100
+  "printWidth": 100,
+  "jsxBracketSameLine": false,
+  "arrowParens": "avoid"
 }
