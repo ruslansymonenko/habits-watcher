@@ -7,7 +7,6 @@ import Layout from './layout/Layout';
 import Loader from './components/Loader/Loader';
 
 import { AppStyles } from './App.styled';
-import Header from './layout/Header/Header';
 
 function App() {
   const isAuth = false;

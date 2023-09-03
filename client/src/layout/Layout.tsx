@@ -1,5 +1,4 @@
-import React, { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
+import React from 'react';
 
 import AuthenticatedLayout from './AuthLayout';
 import NoAuthLayout from './NoAuthLayout';
