@@ -21,13 +21,25 @@ export const StartPageStyled = styled.main<{ $showLogoPage: boolean }>`
       : 'none'};
 
   .start-page__logo-circle {
-    height: 600px;
+    height: 50vh;
+    max-height: 600px;
     animation: ${spinAnimation} 8s linear infinite;
   }
 
   .start-page__logo-text {
     position: absolute;
-    height: 550px;
+    height: 40vh;
+    max-height: 500px;
     animation: ${appearanceAnimation} 1s ease;
+  }
+
+  @media (max-width: 768px) {
+    .start-page__logo-circle {
+      height: 30vh;
+    }
+
+    .start-page__logo-text {
+      height: 20vh;
+    }
   }
 `;

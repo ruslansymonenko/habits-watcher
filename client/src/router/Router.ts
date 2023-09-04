@@ -5,6 +5,7 @@ type Route = IRoute[];
 
 const StartPage = lazy(() => import('../pages/StartPage/StartPage'));
 const PresentationPage = lazy(() => import('../pages/PresentationPage/PresentationPage'));
+const checkIsAccountPage = lazy(() => import('../pages/checkIsAccountPage/checkIsAccountPage'));
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 
 export const router: Route = [
@@ -16,6 +17,11 @@ export const router: Route = [
   {
     path: '/presentation',
     element: PresentationPage,
+    private: false,
+  },
+  {
+    path: '/isAccount',
+    element: checkIsAccountPage,
     private: false,
   },
   {

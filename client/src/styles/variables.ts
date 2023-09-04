@@ -4,7 +4,8 @@ export const colors: { [k: string]: string } = {
   accent: '#ff5722',
   lightBackground: '#ffffff',
   primaryText: '#212121',
-  divider: '#bdbdbd',
+  lightText: '#ffffff',
+  inActive: '#bdbdbd',
 };
 
 export const indents: { [k: string]: number } = {
@@ -14,4 +15,12 @@ export const indents: { [k: string]: number } = {
   indent_4: 16,
   indent_5: 20,
   indent_6: 24,
+};
+
+export const fontSizes: { [k: string]: number } = {
+  fontSmall: 10,
+  fontPrimary: 14,
+  fontMedium: 18,
+  fontLarge: 22,
+  fontHuge: 26,
 };
