@@ -38,4 +38,9 @@ export const InfoSliderDot = styled.div<{ $isActive: boolean }>`
   &:hover {
     transform: scale(1.06);
   }
+
+  @media (max-width: 450px) {
+    width: 15px;
+    height: 15px;
+  }
 `;

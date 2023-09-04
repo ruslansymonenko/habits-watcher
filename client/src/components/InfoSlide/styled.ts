@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { fontSizes, colors } from '../../styles/variables';
+import { fontSizes, colors, indents } from '../../styles/variables';
 
 export const InfoSlideStyled = styled.div`
   display: flex;
@@ -11,33 +11,43 @@ export const InfoSlideStyled = styled.div`
   min-width: 100%;
 `;
 
-export const InfoSlideImageContainer = styled.div`
-  height: 350px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  & img {
-    height: 100%;
-  }
-`;
-
 export const InfoSlideImg = styled.img`
-  width: 300px;
-  /* max-height: 70%;
-  height: 350px;
-  min-height: 200px; */
+  width: 400px;
+
+  @media (max-width: 450px) {
+    width: 300px;
+  }
 `;
 
 export const InfoSlideTitle = styled.h1`
   font-size: ${fontSizes.fontHuge}px;
   font-weight: 600;
+  text-align: center;
   color: ${colors.primaryText};
+  margin-bottom: ${indents.indent_1}px;
+
+  @media (max-width: 915px) {
+    font-size: ${fontSizes.fontLarge}px;
+  }
+
+  @media (max-width: 450px) {
+    font-size: ${fontSizes.fontMedium}px;
+  }
 `;
 
 export const InfoSlideText = styled.p`
   font-size: ${fontSizes.fontLarge}px;
   font-weight: 400;
+  text-align: center;
   color: ${colors.primaryText};
+  max-width: 800px;
+  margin-bottom: ${indents.indent_1}px;
+
+  @media (max-width: 915px) {
+    font-size: ${fontSizes.fontMedium}px;
+  }
+
+  @media (max-width: 450px) {
+    font-size: ${fontSizes.fontPrimary}px;
+  }
 `;
