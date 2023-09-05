@@ -21,7 +21,10 @@ function App() {
 
       <div className="App">
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route
+            path="/"
+            element={<Layout />}
+          >
             {router.map((route, index) => {
               const AppPage = route.element;
 
@@ -45,6 +48,10 @@ function App() {
                 />
               );
             })}
+            <Route
+              path="/*"
+              element={<Navigate to="/notfound" />}
+            />
           </Route>
         </Routes>
       </div>
