@@ -5,17 +5,16 @@ import {
   NotFoundPageTextContainer,
   NotFoundPageText,
   NotFoundPageImage,
-  NotFoundPageContent,
 } from './styled';
-import { Container } from '../../components/Container/Container';
+import { Container, Content } from '../../App.styled';
 
 import sadEmojiImage from '../../assets/icons/emoji-sad.svg';
 
-const NotFoundPage = () => {
+const NotFoundPage: React.FC = () => {
   return (
     <NotFoundPageStyled>
       <Container>
-        <NotFoundPageContent>
+        <Content className="notfound-contnet">
           <NotFoundPageTextContainer>
             <NotFoundPageText>This page is not found or has not yet been created</NotFoundPageText>
           </NotFoundPageTextContainer>
@@ -23,7 +22,7 @@ const NotFoundPage = () => {
             src={sadEmojiImage}
             alt="Sad emoji"
           />
-        </NotFoundPageContent>
+        </Content>
       </Container>
     </NotFoundPageStyled>
   );

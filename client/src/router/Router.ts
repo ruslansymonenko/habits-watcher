@@ -5,7 +5,7 @@ type Route = IRoute[];
 
 const StartPage = lazy(() => import('../pages/StartPage/StartPage'));
 const PresentationPage = lazy(() => import('../pages/PresentationPage/PresentationPage'));
-const checkIsAccountPage = lazy(() => import('../pages/checkIsAccountPage/checkIsAccountPage'));
+const CheckIsAccountPage = lazy(() => import('../pages/CheckIsAccountPage/CheckIsAccountPage'));
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'));
 
@@ -22,7 +22,7 @@ export const router: Route = [
   },
   {
     path: '/isAccount',
-    element: checkIsAccountPage,
+    element: CheckIsAccountPage,
     private: false,
   },
   {

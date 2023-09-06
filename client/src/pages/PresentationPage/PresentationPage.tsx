@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Container } from '../../components/Container/Container';
+import { Container } from '../../App.styled';
 import InfoSlider from '../../containers/InfoSlider/InfoSlider';
 import NextButton from '../../components/NextButton/NextButton';
 
 import { PresentationPageStyled } from './styled';
 
-const PresentationPage = () => {
+const PresentationPage: React.FC = () => {
   const navigate = useNavigate();
 
   const goToNextPage = (): void => {

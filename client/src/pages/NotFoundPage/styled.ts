@@ -6,17 +6,23 @@ export const NotFoundPageStyled = styled.div`
   overflow: hidden;
   height: 100vh;
   background-color: ${colors.primary};
+
+  .notfound-contnet {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
 `;
 
-export const NotFoundPageContent = styled.div`
-  flex-grow: 1;
-  height: 100%;
-  min-width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-`;
+// export const NotFoundPageContent = styled.div`
+//   flex-grow: 1;
+//   height: 100%;
+//   min-width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: space-around;
+// `;
 
 export const NotFoundPageTextContainer = styled.div`
   height: 100px;
