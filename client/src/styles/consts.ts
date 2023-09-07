@@ -1,5 +1,9 @@
+import { indents } from './variables';
+
 //Widths and heights
 export const HEADER_LIGHT = 50;
+
+export const CONTAINER_PADDING = indents.indent_2;
 
 //Layers
 export const Z_INDEX_LEVEL_1 = 1;

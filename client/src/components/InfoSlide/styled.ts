@@ -7,8 +7,9 @@ export const InfoSlideStyled = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 100%;
+  height: 400px;
   min-width: 100%;
+  margin-bottom: ${indents.indent_3}px;
 `;
 
 export const InfoSlideImg = styled.img`
@@ -24,7 +25,7 @@ export const InfoSlideTitle = styled.h1`
   font-weight: 600;
   text-align: center;
   color: ${colors.primaryText};
-  margin-bottom: ${indents.indent_1}px;
+  margin-bottom: ${indents.indent_3}px;
 
   @media (max-width: 915px) {
     font-size: ${fontSizes.fontLarge}px;
@@ -41,7 +42,7 @@ export const InfoSlideText = styled.p`
   text-align: center;
   color: ${colors.primaryText};
   max-width: 800px;
-  margin-bottom: ${indents.indent_1}px;
+  margin-bottom: ${indents.indent_3}px;
 
   @media (max-width: 915px) {
     font-size: ${fontSizes.fontMedium}px;

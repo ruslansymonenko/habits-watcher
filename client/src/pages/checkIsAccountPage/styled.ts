@@ -2,12 +2,14 @@ import styled from 'styled-components';
 
 import { colors, indents, fontSizes } from '../../styles/variables';
 
+import { CONTAINER_PADDING } from '../../styles/consts';
+
 export const CheckIsAccountPageStyled = styled.div`
   height: 100vh;
-  overflow: hidden;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .isaccount-contnet {
-    height: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;

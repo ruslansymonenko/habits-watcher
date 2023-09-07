@@ -2,6 +2,8 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import { colors, indents } from './styles/variables';
 
+import { CONTAINER_PADDING } from './styles/consts';
+
 export const AppStyles = createGlobalStyle`
   //Removing basic css styles
   html {
@@ -79,10 +81,11 @@ export const AppStyles = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-  height: 100%;
-  width: 1200px;
+  min-height: 200px;
+  max-width: calc(1200px - ${CONTAINER_PADDING * 2}px);
+  width: 100%;
   margin: 0 auto;
-  padding: ${indents.indent_2}px ${indents.indent_2}px;
+  padding: ${CONTAINER_PADDING}px;
 
   @media (max-width: 1240px) {
     width: 900px;
@@ -107,7 +110,6 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   flex-grow: 1;
-  height: 100%;
   min-width: 100%;
   display: flex;
 `;

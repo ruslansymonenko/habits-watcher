@@ -9,7 +9,8 @@ import Loader from './components/Loader/Loader';
 import { AppStyles } from './App.styled';
 
 function App() {
-  const isAuth = false;
+  //Here temporary replacement for registration check
+  const isAuth = true;
 
   const PrivateRoute = ({ children }: { children: ReactNode }): JSX.Element => {
     return isAuth ? <>{children}</> : <Navigate to="/" />;
