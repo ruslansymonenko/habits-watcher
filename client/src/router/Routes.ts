@@ -1,5 +1,9 @@
 import { lazy } from 'react';
-import { IRoute } from './IRoute';
+export interface IRoute {
+  path: string;
+  element: React.LazyExoticComponent<React.FC>;
+  private: boolean;
+}
 
 type Route = IRoute[];
 
@@ -13,7 +17,7 @@ const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'));
 
-export const router: Route = [
+export const routes: Route = [
   {
     path: '/',
     element: StartPage,
