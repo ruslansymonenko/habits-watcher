@@ -1,7 +1,7 @@
 import { indents } from './variables';
 
 //Widths and heights
-export const HEADER_LIGHT = 50;
+export const HEADER_HEIGHT = 50;
 
 export const CONTAINER_PADDING = indents.indent_2;
 

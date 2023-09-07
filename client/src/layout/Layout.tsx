@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import AuthenticatedLayout from './AuthLayout';
-import NoAuthLayout from './NoAuthLayout';
+import { RootState } from '../store';
 
 const Layout: React.FC = () => {
-  const isAuth = false;
+  const isAuth: boolean = useSelector((state: RootState) => state.auth.isAuth);
 
-  return isAuth ? <AuthenticatedLayout /> : <NoAuthLayout />;
+  return (
+    <React.Fragment>
+      <main>
+        <Suspense fallback={'loading...'}>
+          <Outlet />
+        </Suspense>
+      </main>
+    </React.Fragment>
+  );
 };
 
 export default Layout;

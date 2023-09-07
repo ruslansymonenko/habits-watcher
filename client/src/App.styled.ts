@@ -81,7 +81,6 @@ export const AppStyles = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-  min-height: 200px;
   max-width: calc(1200px - ${CONTAINER_PADDING * 2}px);
   width: 100%;
   margin: 0 auto;

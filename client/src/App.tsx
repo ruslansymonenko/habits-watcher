@@ -1,6 +1,8 @@
 import React, { Suspense, ReactNode } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
+import { RootState } from './store';
 import { router } from './router/Router';
 
 import Layout from './layout/Layout';
@@ -9,10 +11,13 @@ import Loader from './components/Loader/Loader';
 import { AppStyles } from './App.styled';
 
 function App() {
-  //Here temporary replacement for registration check
-  const isAuth = true;
+  const isAuth: boolean = useSelector((state: RootState) => state.auth.isAuth);
 
   const PrivateRoute = ({ children }: { children: ReactNode }): JSX.Element => {
+    return isAuth ? <>{children}</> : <Navigate to="/" />;
+  };
+
+  const PublicRoute = ({ children }: { children: ReactNode }): JSX.Element => {
     return isAuth ? <>{children}</> : <Navigate to="/" />;
   };
 
