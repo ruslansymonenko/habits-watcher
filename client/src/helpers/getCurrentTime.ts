@@ -2,7 +2,7 @@ type timeType = 'time' | 'date' | 'full';
 
 export const getCurrentTime = (type: timeType): string => {
   const now: Date = new Date();
-  let result: string = '';
+  let result = '';
 
   const getTime = (): string => {
     const hours = String(now.getHours()).padStart(2, '0');
