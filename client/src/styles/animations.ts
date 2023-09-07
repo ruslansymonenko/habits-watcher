@@ -28,3 +28,25 @@ export const hideAnimation = keyframes`
     opacity: 0;
   }
 `;
+
+export const appearanceRightAnimation = keyframes`
+    from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+`;
+
+export const appearanceDownAnimation = keyframes`
+    from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+`;

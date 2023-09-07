@@ -78,6 +78,11 @@ export const AppStyles = createGlobalStyle`
   font-weight: 400;
   font-style: normal;
   }
+
+  .layout-content{
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const Container = styled.div`

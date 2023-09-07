@@ -15,6 +15,8 @@ const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
 
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
+const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
+const SettingsPage = lazy(() => import('../pages/SettingsPage/SettingsPage'));
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'));
 
 export const routes: Route = [
@@ -46,6 +48,16 @@ export const routes: Route = [
   {
     path: '/home',
     element: HomePage,
+    private: true,
+  },
+  {
+    path: '/profile',
+    element: ProfilePage,
+    private: true,
+  },
+  {
+    path: '/settings',
+    element: SettingsPage,
     private: true,
   },
   {

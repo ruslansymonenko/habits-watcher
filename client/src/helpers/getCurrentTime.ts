@@ -1,4 +1,4 @@
-type timeType = 'time' | 'date' | 'full';
+type timeType = 'time' | 'date' | 'full' | 'year';
 
 export const getCurrentTime = (type: timeType): string => {
   const now: Date = new Date();
@@ -15,7 +15,12 @@ export const getCurrentTime = (type: timeType): string => {
     const year = String(now.getFullYear());
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
-    return `${day}-${month}-${year}`;
+    return `${day}/${month}/${year}`;
+  };
+
+  const getYear = (): string => {
+    const year = String(now.getFullYear());
+    return year;
   };
 
   if (type === 'time') {
@@ -33,6 +38,11 @@ export const getCurrentTime = (type: timeType): string => {
     const currentDate: string = getDate();
 
     result = `${currentTime} ${currentDate}`;
+  }
+
+  if (type === 'year') {
+    const year = getYear();
+    result = year;
   }
 
   return result;

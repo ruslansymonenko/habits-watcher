@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import { HEADER_HEIGHT } from '../../styles/consts';
 import { colors, indents, fontSizes } from '../../styles/variables';
 
+import { appearanceDownAnimation } from '../../styles/animations';
+
 export const HeaderStyled = styled.div`
   display: flex;
   align-items: center;
   height: ${HEADER_HEIGHT}px;
   padding: ${indents.indent_1}px;
   box-shadow: -1px 1px 12px -7px black;
+  animation: ${appearanceDownAnimation} 0.5s ease;
 
   .header-content {
     justify-content: space-between;
