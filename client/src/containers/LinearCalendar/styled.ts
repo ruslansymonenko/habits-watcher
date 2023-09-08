@@ -12,6 +12,7 @@ export const LinearCalendarStyled = styled.div`
   /* border-bottom: 1px solid ${colors.darkBackground};
   border-top: 1px solid ${colors.darkBackground}; */
   margin-top: ${indents.indent_6}px;
+  margin-bottom: ${indents.indent_6}px;
 
   .linear-calendar__btn_prev {
     top: 50%;
