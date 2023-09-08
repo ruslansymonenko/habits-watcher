@@ -3,6 +3,7 @@ export const colors: { [k: string]: string } = {
   darkPrimary: '#0097a7',
   accent: '#ff5722',
   lightBackground: '#ffffff',
+  darkBackground: '#636e72',
   primaryText: '#212121',
   lightText: '#ffffff',
   inActive: '#bdbdbd',

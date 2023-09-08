@@ -14,7 +14,7 @@ export const SidePanelStyled = styled.nav`
   height: 100%;
   color: ${colors.lightText};
   padding: 0px ${indents.indent_2}px;
-  background-color: ${colors.primary};
+  background-color: ${colors.darkBackground};
   animation: ${appearanceRightAnimation} 0.5s ease;
 `;
 
@@ -32,13 +32,13 @@ export const SidePanelNavListItem = styled.ul`
   align-items: center;
   justify-content: start;
   width: 100%;
-  font-size: ${fontSizes.fontHuge}px;
+  font-size: ${fontSizes.fontLarge}px;
   margin-bottom: ${indents.indent_4}px;
   font-weight: 600;
   cursor: pointer;
 `;
 
 export const SidePanelNavImage = styled.img`
-  height: 26px;
+  height: 22px;
   margin-right: ${indents.indent_3}px;
 `;
