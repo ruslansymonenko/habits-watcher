@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors, indents, fontSizes } from '../../styles/variables';
+import { colors, indents } from '../../styles/variables';
 
 export const DayProgressStyled = styled.div`
   position: relative;
@@ -23,7 +23,11 @@ export const DayProgressStyled = styled.div`
   }
 
   .day-progress__circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 30%;
+    height: 200px;
   }
 `;
 

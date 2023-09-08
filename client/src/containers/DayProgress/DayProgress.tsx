@@ -1,4 +1,8 @@
 import React from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+import { data, testHabits } from '../../helpers/dataForTests';
 
 import {
   DayProgressStyled,
@@ -9,20 +13,7 @@ import {
 } from './styled';
 
 const DayProgress: React.FC = () => {
-  const testHabits = [
-    {
-      name: 'habit',
-      color: 'habit_1',
-    },
-    {
-      name: 'habit 2',
-      color: 'habit_2',
-    },
-    {
-      name: 'habit 3',
-      color: 'habit_3',
-    },
-  ];
+  ChartJS.register(ArcElement, Tooltip, Legend);
 
   return (
     <DayProgressStyled>
@@ -34,7 +25,9 @@ const DayProgress: React.FC = () => {
           </DayProgressHabit>
         ))}
       </DayProgressSection>
-      <DayProgressSection className="day-progress__circle"></DayProgressSection>
+      <DayProgressSection className="day-progress__circle">
+        <Doughnut data={data} />
+      </DayProgressSection>
     </DayProgressStyled>
   );
 };
