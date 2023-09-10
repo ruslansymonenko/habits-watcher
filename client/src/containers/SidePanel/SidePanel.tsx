@@ -8,9 +8,9 @@ import {
   SidePanelNavImage,
 } from './styled';
 
-import homeImage from '../../assets/icons/home.svg';
-import profileImage from '../../assets/icons/account.svg';
-import settingsImage from '../../assets/icons/settings.svg';
+import homeImage from '../../assets/icons/navigation-images/home.svg';
+import profileImage from '../../assets/icons/navigation-images/account.svg';
+import settingsImage from '../../assets/icons/navigation-images/settings.svg';
 import logoutImage from '../../assets/icons/logout.svg';
 
 const SidePanel: React.FC = () => {

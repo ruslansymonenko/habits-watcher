@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { BOTTOM_PANEL_HEIGHT } from '../../styles/consts';
+
 export const HomePageStyled = styled.div`
   position: relative;
   height: 100vh;
@@ -13,5 +15,8 @@ export const HomePageContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: space-around; */
+
+  @media (max-width: 790px) {
+    height: calc(100% - ${BOTTOM_PANEL_HEIGHT}px);
+  }
 `;

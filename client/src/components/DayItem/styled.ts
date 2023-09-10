@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors, indents } from '../../styles/variables';
+import { colors, indents, fontSizes } from '../../styles/variables';
 
 export const DayItemStyled = styled.li<{ $isActive: boolean }>`
   display: flex;
@@ -20,6 +20,10 @@ export const DayItemStyled = styled.li<{ $isActive: boolean }>`
   &:hover {
     transform: scale(1.05);
   }
+
+  @media (max-width: 790px) {
+    width: 8%;
+  }
 `;
 
 export const DayItemDate = styled.div<{ $isActive: boolean }>`
@@ -29,4 +33,8 @@ export const DayItemDate = styled.div<{ $isActive: boolean }>`
 export const DayItemDay = styled.div<{ $isActive: boolean }>`
   color: ${({ $isActive }) => ($isActive ? `${colors.lightText}` : `${colors.accent}`)};
   font-weight: 600;
+
+  @media (max-width: 790px) {
+    font-size: ${fontSizes.fontSmall}px;
+  }
 `;

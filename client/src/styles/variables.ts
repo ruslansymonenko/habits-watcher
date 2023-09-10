@@ -7,7 +7,7 @@ export const colors: { [k: string]: string } = {
   darkBackground: '#636e72',
   primaryText: '#212121',
   lightText: '#ffffff',
-  inActive: '#bdbdbd',
+  inActive: '#dfe6e9',
 
   //habits colors:
   habit_1: '#55efc4',

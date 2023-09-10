@@ -7,10 +7,6 @@ export const LinearCalendarStyled = styled.div`
   height: 70px;
   width: 80%;
   padding: ${indents.indent_3}px;
-  /* box-shadow: 0px 15px 12px -19px black;
-  border-radius: 3px; */
-  /* border-bottom: 1px solid ${colors.darkBackground};
-  border-top: 1px solid ${colors.darkBackground}; */
   margin-top: ${indents.indent_6}px;
   margin-bottom: ${indents.indent_6}px;
 
@@ -56,5 +52,10 @@ export const LinearCalendarBtn = styled.button`
   & img {
     height: 100%;
     width: 100%;
+  }
+
+  @media (max-width: 790px) {
+    height: 25px;
+    width: 25px;
   }
 `;

@@ -1,10 +1,10 @@
 export const data = {
-  labels: ['Red', 'Blue', 'Yellow'],
+  labels: ['Progress', 'Day'],
   datasets: [
     {
       label: 'My First Dataset',
-      data: [300, 90, 100],
-      backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
+      data: [50, 100],
+      backgroundColor: ['#00bcd4', '#ffffff'],
       hoverOffset: 4,
     },
   ],
@@ -12,15 +12,39 @@ export const data = {
 
 export const testHabits = [
   {
-    name: 'habit',
+    name: 'Workout',
     color: 'habit_1',
+    isDone: false,
+    habitCondition: '30 min',
   },
   {
-    name: 'habit 2',
+    name: 'Dring Water',
     color: 'habit_2',
+    isDone: true,
+    habitCondition: '4 liter',
   },
   {
-    name: 'habit 3',
+    name: 'Read book',
     color: 'habit_3',
+    isDone: false,
+    habitCondition: '10 pages',
+  },
+  {
+    name: 'Running',
+    color: 'habit_4',
+    isDone: false,
+    habitCondition: '10 km',
+  },
+  {
+    name: 'English',
+    color: 'habit_5',
+    isDone: false,
+    habitCondition: '30 min',
+  },
+  {
+    name: 'Programming',
+    color: 'habit_6',
+    isDone: true,
+    habitCondition: '1 hour',
   },
 ];

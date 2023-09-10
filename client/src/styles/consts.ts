@@ -3,6 +3,8 @@ import { indents } from './variables';
 //Widths and heights
 export const HEADER_HEIGHT = 50;
 
+export const BOTTOM_PANEL_HEIGHT = 60;
+
 export const CONTAINER_PADDING = indents.indent_2;
 
 //Layers
