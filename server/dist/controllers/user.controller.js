@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.updateUser = exports.getUser = exports.login = exports.register = void 0;
 const logger_service_1 = require("../services/logger.service");
 const registration_service_1 = require("../services/user-services/registration.service");
+const deleteUser_service_1 = require("../services/user-services/deleteUser.service");
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (email && password) {
@@ -61,14 +62,52 @@ const getUser = (req, res) => {
 };
 exports.getUser = getUser;
 const updateUser = (req, res) => {
-    return res.json({
-        message: 'login',
-    });
+    const { updateType, newData } = req.body;
+    if (updateType && newData) {
+        return res.json({
+            message: 'login',
+        });
+    }
+    else {
+        (0, logger_service_1.loggerService)('error', 'updateType and newData is required for update');
+        return res.json({
+            message: 'For update data is required: update type and new data',
+        });
+    }
 };
 exports.updateUser = updateUser;
-const deleteUser = (req, res) => {
-    return res.json({
-        message: 'login',
-    });
-};
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.id;
+    if (userId) {
+        try {
+            const deleteUser = yield (0, deleteUser_service_1.deleteUserService)({
+                id: userId,
+            });
+            if (deleteUser.isDone) {
+                (0, logger_service_1.loggerService)('success', `User: ${userId} was deleted`);
+                return res.json({
+                    message: deleteUser.statusMessage,
+                });
+            }
+            else {
+                (0, logger_service_1.loggerService)('error', 'problem with deleting a user in delete service');
+                return res.json({
+                    message: deleteUser.statusMessage,
+                });
+            }
+        }
+        catch (error) {
+            (0, logger_service_1.loggerService)('error', `${error}`);
+            return res.json({
+                message: 'Some error, please, try later',
+            });
+        }
+    }
+    else {
+        (0, logger_service_1.loggerService)('error', 'User ID was not found');
+        return res.json({
+            message: 'User ID is required',
+        });
+    }
+});
 exports.deleteUser = deleteUser;
