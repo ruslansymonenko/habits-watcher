@@ -21,7 +21,8 @@
     "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.3",

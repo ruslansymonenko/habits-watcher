@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.register = void 0;
 const register = (req, res) => {
+    console.log('hello');
     return res.json({
         message: 'register',
     });
