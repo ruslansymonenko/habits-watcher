@@ -13,6 +13,7 @@ exports.deleteUser = exports.updateUser = exports.getUser = exports.login = expo
 const logger_service_1 = require("../services/logger.service");
 const registration_service_1 = require("../services/user-services/registration.service");
 const deleteUser_service_1 = require("../services/user-services/deleteUser.service");
+const updateUser_service_1 = require("../services/user-services/updateUser.service");
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (email && password) {
@@ -61,12 +62,62 @@ const getUser = (req, res) => {
     });
 };
 exports.getUser = getUser;
-const updateUser = (req, res) => {
-    const { updateType, newData } = req.body;
+const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { updateType, userId, newData } = req.body;
+    let updateServiceResponse = {
+        isDone: false,
+        statusMessage: '',
+        user: null,
+    };
     if (updateType && newData) {
-        return res.json({
-            message: 'login',
-        });
+        switch (updateType) {
+            case 'email':
+                updateServiceResponse = yield (0, updateUser_service_1.updateUserService)({
+                    updateType: 'email',
+                    userId: userId,
+                    newData,
+                });
+                break;
+            case 'password':
+                updateServiceResponse = yield (0, updateUser_service_1.updateUserService)({
+                    updateType: 'password',
+                    userId: userId,
+                    newData,
+                });
+                break;
+            case 'name':
+                updateServiceResponse = yield (0, updateUser_service_1.updateUserService)({
+                    updateType: 'name',
+                    userId: userId,
+                    newData,
+                });
+                break;
+            case 'photo':
+                updateServiceResponse = yield (0, updateUser_service_1.updateUserService)({
+                    updateType: 'photo',
+                    userId: userId,
+                    newData,
+                });
+                break;
+            default:
+                (0, logger_service_1.loggerService)('error', 'wrong type of updated data');
+                return res.json({
+                    message: 'the type of data being updated does not match any of the installed ones',
+                });
+        }
+        if (updateServiceResponse.isDone === true) {
+            (0, logger_service_1.loggerService)('success', 'The data was successfully updated');
+            return res.json({
+                message: updateServiceResponse.statusMessage,
+                user: updateServiceResponse.user,
+            });
+        }
+        else {
+            (0, logger_service_1.loggerService)('error', 'Erorr with updating data on Update User Service');
+            return res.json({
+                message: updateServiceResponse.statusMessage,
+            });
+        }
     }
     else {
         (0, logger_service_1.loggerService)('error', 'updateType and newData is required for update');
@@ -74,7 +125,7 @@ const updateUser = (req, res) => {
             message: 'For update data is required: update type and new data',
         });
     }
-};
+});
 exports.updateUser = updateUser;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;

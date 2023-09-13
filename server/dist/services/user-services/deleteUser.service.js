@@ -16,7 +16,7 @@ exports.deleteUserService = void 0;
 const database_1 = __importDefault(require("../../database/database"));
 const deleteUserService = ({ id }) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const deleteUser = yield database_1.default.query(`DELETE FROM users where id = $1`, [id]);
+        yield database_1.default.query(`DELETE FROM users where id = $1`, [id]);
         const response = {
             isDone: true,
             statusMessage: 'User has successfully deleted',

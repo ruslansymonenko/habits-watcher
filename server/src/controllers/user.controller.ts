@@ -3,6 +3,9 @@ import { Request, Response } from 'express';
 import { loggerService } from '../services/logger.service';
 import { registrationService } from '../services/user-services/registration.service';
 import { deleteUserService } from '../services/user-services/deleteUser.service';
+import { updateUserService } from '../services/user-services/updateUser.service';
+
+import { IUpdateUserResponse, userData } from '../services/user-services/updateUser.service';
 
 export const register = async (req: Request, res: Response): Promise<Response> => {
   const { email, password } = req.body;
@@ -50,13 +53,63 @@ export const getUser = (req: Request, res: Response): Response => {
   });
 };
 
-export const updateUser = (req: Request, res: Response): Response => {
-  const { updateType, newData } = req.body;
+export const updateUser = async (req: Request, res: Response): Promise<Response> => {
+  const { updateType, userId, newData } = req.body;
+  let updateServiceResponse: IUpdateUserResponse = {
+    isDone: false,
+    statusMessage: '',
+    user: null,
+  };
 
   if (updateType && newData) {
-    return res.json({
-      message: 'login',
-    });
+    switch (updateType) {
+      case 'email':
+        updateServiceResponse = await updateUserService({
+          updateType: 'email',
+          userId: userId,
+          newData,
+        });
+        break;
+      case 'password':
+        updateServiceResponse = await updateUserService({
+          updateType: 'password',
+          userId: userId,
+          newData,
+        });
+        break;
+      case 'name':
+        updateServiceResponse = await updateUserService({
+          updateType: 'name',
+          userId: userId,
+          newData,
+        });
+        break;
+      case 'photo':
+        updateServiceResponse = await updateUserService({
+          updateType: 'photo',
+          userId: userId,
+          newData,
+        });
+        break;
+      default:
+        loggerService('error', 'wrong type of updated data');
+        return res.json({
+          message: 'the type of data being updated does not match any of the installed ones',
+        });
+    }
+
+    if (updateServiceResponse.isDone === true) {
+      loggerService('success', 'The data was successfully updated');
+      return res.json({
+        message: updateServiceResponse.statusMessage,
+        user: updateServiceResponse.user,
+      });
+    } else {
+      loggerService('error', 'Erorr with updating data on Update User Service');
+      return res.json({
+        message: updateServiceResponse.statusMessage,
+      });
+    }
   } else {
     loggerService('error', 'updateType and newData is required for update');
     return res.json({

@@ -2,16 +2,17 @@ import database from '../../database/database';
 
 interface IUpdateUserProps {
   updateType: updateTypes;
+  userId: string;
   newData: string;
 }
 
-interface IUpdateUserResponse {
+export interface IUpdateUserResponse {
   isDone: boolean;
   statusMessage: string;
-  user?: userData;
+  user?: userData | null;
 }
 
-type userData = {
+export type userData = {
   id: number;
   email: string;
   password: string;
@@ -20,13 +21,21 @@ type userData = {
   created_date: string;
 };
 
-type updateTypes = 'email' | 'password' | 'name' | 'photo';
+export type updateTypes = 'email' | 'password' | 'name' | 'photo';
 
-const updateUserEmail = (newEmail: string) => {
+const updateUserEmail = async (id: string, newEmail: string) => {
   try {
+    const user = await database.query(`UPDATE users set email = $1 where id = $2 RETURNING *`, [
+      newEmail,
+      id,
+    ]);
+
+    const userData: userData = user.rows[0];
+
     const response: IUpdateUserResponse = {
       isDone: true,
-      statusMessage: 'User has successfully registered',
+      statusMessage: 'The email was successfully updated',
+      user: userData,
     };
 
     return response;
@@ -40,11 +49,19 @@ const updateUserEmail = (newEmail: string) => {
   }
 };
 
-const updateUserPassword = (newPassword: string) => {
+const updateUserPassword = async (id: string, newPassword: string) => {
   try {
+    const user = await database.query(`UPDATE users set password = $1 where id = $2 RETURNING *`, [
+      newPassword,
+      id,
+    ]);
+
+    const userData: userData = user.rows[0];
+
     const response: IUpdateUserResponse = {
       isDone: true,
-      statusMessage: 'User has successfully registered',
+      statusMessage: 'The password was successfully updated',
+      user: userData,
     };
 
     return response;
@@ -58,11 +75,19 @@ const updateUserPassword = (newPassword: string) => {
   }
 };
 
-const updateUserName = (newName: string) => {
+const updateUserName = async (id: string, newName: string) => {
   try {
+    const user = await database.query(`UPDATE users set user_name = $1 where id = $2 RETURNING *`, [
+      newName,
+      id,
+    ]);
+
+    const userData: userData = user.rows[0];
+
     const response: IUpdateUserResponse = {
       isDone: true,
-      statusMessage: 'User has successfully registered',
+      statusMessage: 'The password was successfully updated',
+      user: userData,
     };
 
     return response;
@@ -76,11 +101,19 @@ const updateUserName = (newName: string) => {
   }
 };
 
-const updateUserPhoto = (newPhoto: string) => {
+const updateUserPhoto = async (id: string, newPhoto: string) => {
   try {
+    const user = await database.query(`UPDATE users set photo_url = $1 where id = $2 RETURNING *`, [
+      newPhoto,
+      id,
+    ]);
+
+    const userData: userData = user.rows[0];
+
     const response: IUpdateUserResponse = {
       isDone: true,
-      statusMessage: 'User has successfully registered',
+      statusMessage: 'The password was successfully updated',
+      user: userData,
     };
 
     return response;
@@ -96,28 +129,32 @@ const updateUserPhoto = (newPhoto: string) => {
 
 export const updateUserService = async ({
   updateType,
+  userId,
   newData,
 }: IUpdateUserProps): Promise<IUpdateUserResponse> => {
-  const response: IUpdateUserResponse = {
+  let response: IUpdateUserResponse = {
     isDone: false,
     statusMessage: '',
   };
 
   switch (updateType) {
     case 'email':
-      await updateUserEmail(newData);
+      response = await updateUserEmail(userId, newData);
       break;
     case 'password':
-      await updateUserPassword(newData);
+      response = await updateUserPassword(userId, newData);
       break;
     case 'name':
-      await updateUserName(newData);
+      response = await updateUserName(userId, newData);
       break;
     case 'photo':
-      await updateUserPhoto(newData);
+      response = await updateUserPhoto(userId, newData);
       break;
     default:
-      return response;
+      response = {
+        isDone: false,
+        statusMessage: 'something going wrong',
+      };
   }
 
   return response;

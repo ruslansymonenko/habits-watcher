@@ -11,7 +11,7 @@ interface IDeleteUserResponse {
 
 export const deleteUserService = async ({ id }: IDeleteProps): Promise<IDeleteUserResponse> => {
   try {
-    const deleteUser = await database.query(`DELETE FROM users where id = $1`, [id]);
+    await database.query(`DELETE FROM users where id = $1`, [id]);
 
     const response: IDeleteUserResponse = {
       isDone: true,
