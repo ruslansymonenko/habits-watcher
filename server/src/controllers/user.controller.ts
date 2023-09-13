@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { loggerService } from '../services/logger.service';
 import { registrationService } from '../services/user-services/registration.service';
+import { loginService } from '../services/user-services/login.servise';
 import { deleteUserService } from '../services/user-services/deleteUser.service';
 import { updateUserService } from '../services/user-services/updateUser.service';
 
@@ -20,6 +21,8 @@ export const register = async (req: Request, res: Response): Promise<Response> =
         loggerService('success', 'successful registration');
         return res.json({
           message: userRegistration.statusMessage,
+          user: userRegistration.user,
+          token: userRegistration.token,
         });
       } else {
         loggerService('error', 'registration error, registrationService: isDone=false');
@@ -41,16 +44,54 @@ export const register = async (req: Request, res: Response): Promise<Response> =
   }
 };
 
-export const login = (req: Request, res: Response): Response => {
-  return res.json({
-    message: 'login',
-  });
+export const login = async (req: Request, res: Response): Promise<Response> => {
+  const { email, password } = req.body;
+  if (email && password) {
+    try {
+      const userLogin = await loginService({
+        email: email,
+        password: password,
+      });
+
+      if (userLogin.isDone) {
+        loggerService('success', 'successful login');
+        return res.json({
+          message: userLogin.statusMessage,
+          user: userLogin.user,
+          token: userLogin.token,
+        });
+      } else {
+        loggerService('error', 'login error, loginServicee: isDone=false');
+        return res.json({
+          message: userLogin.statusMessage,
+        });
+      }
+    } catch (error) {
+      loggerService('error', `${error}`);
+      return res.json({
+        message: 'Wrong auth data was sent to the server, check do you send email and password',
+      });
+    }
+  } else {
+    loggerService('error', 'Wrong auth data');
+    return res.json({
+      message: 'Wrong auth data was sent to the server, check do you send email and password',
+    });
+  }
 };
 
 export const getUser = (req: Request, res: Response): Response => {
-  return res.json({
-    message: 'login',
-  });
+  const userId = req.params.id;
+
+  if (userId) {
+    return res.json({
+      message: 'get user',
+    });
+  } else {
+    return res.json({
+      message: 'get user',
+    });
+  }
 };
 
 export const updateUser = async (req: Request, res: Response): Promise<Response> => {

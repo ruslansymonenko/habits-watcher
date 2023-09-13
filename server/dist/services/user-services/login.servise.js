@@ -12,34 +12,41 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registrationService = void 0;
+exports.loginService = void 0;
 const database_1 = __importDefault(require("../../database/database"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const registrationService = ({ email, password, }) => __awaiter(void 0, void 0, void 0, function* () {
+const loginService = ({ email, password }) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const checkIsUser = yield database_1.default.query('SELECT * FROM users WHERE email = $1', [email]);
         if (checkIsUser.rows.length > 0) {
-            const response = {
-                isDone: false,
-                statusMessage: 'This user is already registered',
-            };
-            return response;
+            const userData = checkIsUser.rows[0];
+            const JWT_SECRET = process.env.JWT_SECRET ? process.env.JWT_SECRET.toString() : '';
+            const isPasswordCorrect = yield bcryptjs_1.default.compare(password, userData.password);
+            if (isPasswordCorrect) {
+                const token = jsonwebtoken_1.default.sign({
+                    userId: userData.id,
+                }, JWT_SECRET, { expiresIn: '10d' });
+                const response = {
+                    isDone: true,
+                    statusMessage: 'You are logged in',
+                    user: userData,
+                    token: token,
+                };
+                return response;
+            }
+            else {
+                const response = {
+                    isDone: false,
+                    statusMessage: 'Wrong password',
+                };
+                return response;
+            }
         }
         else {
-            const salt = bcryptjs_1.default.genSaltSync(10);
-            const hashPassword = bcryptjs_1.default.hashSync(password, salt);
-            const JWT_SECRET = process.env.JWT_SECRET ? process.env.JWT_SECRET.toString() : '';
-            const newUser = yield database_1.default.query(`INSERT INTO users (email, password) values ($1, $2) RETURNING *`, [email, hashPassword]);
-            const userData = newUser.rows[0];
-            const token = jsonwebtoken_1.default.sign({
-                userId: userData.id,
-            }, JWT_SECRET, { expiresIn: '10d' });
             const response = {
-                isDone: true,
-                statusMessage: 'User has successfully registered',
-                user: userData,
-                token: token,
+                isDone: false,
+                statusMessage: 'This user is not registered',
             };
             return response;
         }
@@ -52,4 +59,4 @@ const registrationService = ({ email, password, }) => __awaiter(void 0, void 0, 
         return response;
     }
 });
-exports.registrationService = registrationService;
+exports.loginService = loginService;

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.updateUser = exports.getUser = exports.login = exports.register = void 0;
 const logger_service_1 = require("../services/logger.service");
 const registration_service_1 = require("../services/user-services/registration.service");
+const login_servise_1 = require("../services/user-services/login.servise");
 const deleteUser_service_1 = require("../services/user-services/deleteUser.service");
 const updateUser_service_1 = require("../services/user-services/updateUser.service");
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -26,6 +27,8 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 (0, logger_service_1.loggerService)('success', 'successful registration');
                 return res.json({
                     message: userRegistration.statusMessage,
+                    user: userRegistration.user,
+                    token: userRegistration.token,
                 });
             }
             else {
@@ -50,16 +53,56 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.register = register;
-const login = (req, res) => {
-    return res.json({
-        message: 'login',
-    });
-};
+const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
+    if (email && password) {
+        try {
+            const userLogin = yield (0, login_servise_1.loginService)({
+                email: email,
+                password: password,
+            });
+            if (userLogin.isDone) {
+                (0, logger_service_1.loggerService)('success', 'successful login');
+                return res.json({
+                    message: userLogin.statusMessage,
+                    user: userLogin.user,
+                    token: userLogin.token,
+                });
+            }
+            else {
+                (0, logger_service_1.loggerService)('error', 'login error, loginServicee: isDone=false');
+                return res.json({
+                    message: userLogin.statusMessage,
+                });
+            }
+        }
+        catch (error) {
+            (0, logger_service_1.loggerService)('error', `${error}`);
+            return res.json({
+                message: 'Wrong auth data was sent to the server, check do you send email and password',
+            });
+        }
+    }
+    else {
+        (0, logger_service_1.loggerService)('error', 'Wrong auth data');
+        return res.json({
+            message: 'Wrong auth data was sent to the server, check do you send email and password',
+        });
+    }
+});
 exports.login = login;
 const getUser = (req, res) => {
-    return res.json({
-        message: 'login',
-    });
+    const userId = req.params.id;
+    if (userId) {
+        return res.json({
+            message: 'get user',
+        });
+    }
+    else {
+        return res.json({
+            message: 'get user',
+        });
+    }
 };
 exports.getUser = getUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
