@@ -1,8 +1,10 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import { AppRouter } from './router/Router';
 
 import { AppStyles } from './App.styled';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
       <div className="App">
         <AppRouter />
       </div>
+
+      <ToastContainer position="bottom-right" />
     </>
   );
 }

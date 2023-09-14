@@ -25,31 +25,45 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
             if (userRegistration.isDone) {
                 (0, logger_service_1.loggerService)('success', 'successful registration');
-                return res.json({
+                const response = {
+                    isRequestDone: true,
                     message: userRegistration.statusMessage,
                     user: userRegistration.user,
                     token: userRegistration.token,
-                });
+                };
+                return res.json(response);
             }
             else {
                 (0, logger_service_1.loggerService)('error', 'registration error, registrationService: isDone=false');
-                return res.json({
+                const response = {
+                    isRequestDone: false,
                     message: userRegistration.statusMessage,
-                });
+                    user: userRegistration.user,
+                    token: userRegistration.token,
+                };
+                return res.json(response);
             }
         }
         catch (error) {
             (0, logger_service_1.loggerService)('error', `${error}`);
-            return res.json({
+            const response = {
+                isRequestDone: false,
                 message: 'Wrong auth data was sent to the server, check do you send email and password',
-            });
+                user: null,
+                token: null,
+            };
+            return res.json(response);
         }
     }
     else {
         (0, logger_service_1.loggerService)('error', 'Wrong auth data');
-        return res.json({
+        const response = {
+            isRequestDone: false,
             message: 'Wrong auth data was sent to the server, check do you send email and password',
-        });
+            user: null,
+            token: null,
+        };
+        return res.json(response);
     }
 });
 exports.register = register;

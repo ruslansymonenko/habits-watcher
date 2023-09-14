@@ -2,26 +2,12 @@ import database from '../../database/database';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+import { userData, IRegistrationResponse } from '../../types/userType';
+
 interface IRegistrationProps {
   email: string;
   password: string;
 }
-
-interface IRegistrationResponse {
-  isDone: boolean;
-  statusMessage: string;
-  user?: userData;
-  token?: string;
-}
-
-type userData = {
-  id: number;
-  email: string;
-  password: string;
-  user_name: string | null;
-  photo_url: string | null;
-  created_date: string;
-};
 
 export const registrationService = async ({
   email,
@@ -34,6 +20,8 @@ export const registrationService = async ({
       const response: IRegistrationResponse = {
         isDone: false,
         statusMessage: 'This user is already registered',
+        user: null,
+        token: null,
       };
 
       return response;
@@ -70,6 +58,8 @@ export const registrationService = async ({
     const response: IRegistrationResponse = {
       isDone: false,
       statusMessage: 'Some error, please, try later',
+      user: null,
+      token: null,
     };
 
     return response;

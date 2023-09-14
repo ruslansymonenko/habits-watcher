@@ -6,41 +6,63 @@ import { loginService } from '../services/user-services/login.servise';
 import { deleteUserService } from '../services/user-services/deleteUser.service';
 import { updateUserService } from '../services/user-services/updateUser.service';
 
-import { IUpdateUserResponse, userData } from '../services/user-services/updateUser.service';
+import { IUpdateUserResponse } from '../services/user-services/updateUser.service';
+import { userData, IRegistrationResponse } from '../types/userType';
+
+interface authResponse {
+  isRequestDone: boolean;
+  message: string;
+  user: null | userData;
+  token: null | string;
+}
 
 export const register = async (req: Request, res: Response): Promise<Response> => {
   const { email, password } = req.body;
   if (email && password) {
     try {
-      const userRegistration = await registrationService({
+      const userRegistration: IRegistrationResponse = await registrationService({
         email: email,
         password: password,
       });
 
       if (userRegistration.isDone) {
         loggerService('success', 'successful registration');
-        return res.json({
+        const response: authResponse = {
+          isRequestDone: true,
           message: userRegistration.statusMessage,
           user: userRegistration.user,
           token: userRegistration.token,
-        });
+        };
+        return res.json(response);
       } else {
         loggerService('error', 'registration error, registrationService: isDone=false');
-        return res.json({
+        const response: authResponse = {
+          isRequestDone: false,
           message: userRegistration.statusMessage,
-        });
+          user: userRegistration.user,
+          token: userRegistration.token,
+        };
+        return res.json(response);
       }
     } catch (error) {
       loggerService('error', `${error}`);
-      return res.json({
+      const response: authResponse = {
+        isRequestDone: false,
         message: 'Wrong auth data was sent to the server, check do you send email and password',
-      });
+        user: null,
+        token: null,
+      };
+      return res.json(response);
     }
   } else {
     loggerService('error', 'Wrong auth data');
-    return res.json({
+    const response: authResponse = {
+      isRequestDone: false,
       message: 'Wrong auth data was sent to the server, check do you send email and password',
-    });
+      user: null,
+      token: null,
+    };
+    return res.json(response);
   }
 };
 

@@ -2,6 +2,8 @@ import database from '../../database/database';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+import { userData } from './updateUser.service';
+
 interface ILoginProps {
   email: string;
   password: string;
@@ -14,14 +16,14 @@ interface ILoginResponse {
   token?: string;
 }
 
-type userData = {
-  id: number;
-  email: string;
-  password: string;
-  user_name: string | null;
-  photo_url: string | null;
-  created_date: string;
-};
+// type userData = {
+//   id: number;
+//   email: string;
+//   password: string;
+//   user_name: string | null;
+//   photo_url: string | null;
+//   created_date: string;
+// };
 
 export const loginService = async ({ email, password }: ILoginProps): Promise<ILoginResponse> => {
   try {

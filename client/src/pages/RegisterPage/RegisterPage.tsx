@@ -12,7 +12,7 @@ const RegisterPage: React.FC = () => {
     <RegisterPageStyled>
       <Container>
         <Content className="login-content">
-          <RegisterPageTitle>Login</RegisterPageTitle>
+          <RegisterPageTitle>Registration</RegisterPageTitle>
           <ReggisterPageImg
             src={registerImage}
             alt="register"

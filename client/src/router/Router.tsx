@@ -21,7 +21,8 @@ export const AppRouter = () => {
     if (isAuth) {
       navigate('/home');
     } else if (!isAuth) {
-      navigate('/');
+      //isAccount is for test, then it shold be navigate('/');
+      navigate('/isAccount');
     }
   }, [isAuth]);
 

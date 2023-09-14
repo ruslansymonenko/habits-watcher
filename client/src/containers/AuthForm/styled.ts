@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { colors, indents, fontSizes } from '../../styles/variables';
 
-export const AuthFormStyled = styled.div`
+export const AuthFormStyled = styled.form`
   min-height: 300px;
   width: 100%;
 

@@ -23,6 +23,8 @@ const registrationService = ({ email, password, }) => __awaiter(void 0, void 0, 
             const response = {
                 isDone: false,
                 statusMessage: 'This user is already registered',
+                user: null,
+                token: null,
             };
             return response;
         }
@@ -48,6 +50,8 @@ const registrationService = ({ email, password, }) => __awaiter(void 0, void 0, 
         const response = {
             isDone: false,
             statusMessage: 'Some error, please, try later',
+            user: null,
+            token: null,
         };
         return response;
     }
