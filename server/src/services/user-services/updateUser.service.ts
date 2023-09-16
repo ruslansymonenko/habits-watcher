@@ -86,7 +86,7 @@ const updateUserName = async (id: string, newName: string) => {
 
     const response: IUpdateUserResponse = {
       isDone: true,
-      statusMessage: 'The password was successfully updated',
+      statusMessage: 'The name was successfully updated',
       user: userData,
     };
 
@@ -112,7 +112,7 @@ const updateUserPhoto = async (id: string, newPhoto: string) => {
 
     const response: IUpdateUserResponse = {
       isDone: true,
-      statusMessage: 'The password was successfully updated',
+      statusMessage: 'The photo was successfully updated',
       user: userData,
     };
 

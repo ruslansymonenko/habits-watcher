@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import { getCurrentTime } from '../../helpers/getCurrentTime';
 
 import {
@@ -20,6 +22,7 @@ import appLogoImage from '../../assets/icons/hw-logo.ico';
 import userImg from '../../assets/icons/user.svg';
 
 const Header: React.FC = () => {
+  const userName = useSelector((state: RootState) => state.auth.user?.user_name);
   const [time, setTime] = useState('');
   const [date, setDate] = useState('');
 
@@ -52,7 +55,7 @@ const Header: React.FC = () => {
             <HeaderDate>{date}</HeaderDate>
           </HeaderTimeContainer>
           <HeaderUser>
-            <HeaderUserName>User Name</HeaderUserName>
+            <HeaderUserName>{userName ? userName : 'User Name'}</HeaderUserName>
             <HeaderUserPhotoContainer>
               <HeaderUserPhoto
                 src={userImg}

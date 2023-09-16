@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Container } from '../../App.styled';
 import InfoSlider from '../../containers/InfoSlider/InfoSlider';
-import NextButton from '../../components/NextButton/NextButton';
+import RoundButton from '../../components/RoundButton/RoundButton';
 
 import { PresentationPageStyled } from './styled';
 
@@ -19,12 +19,13 @@ const PresentationPage: React.FC = () => {
       <Container>
         <InfoSlider />
       </Container>
-      <NextButton
+      <RoundButton
         text="Next"
         action={goToNextPage}
         $color="accent"
         $right={5}
         $top={85}
+        $position="absolute"
       />
     </PresentationPageStyled>
   );

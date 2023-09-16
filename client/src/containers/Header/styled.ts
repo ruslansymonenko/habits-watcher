@@ -96,20 +96,23 @@ export const HeaderClock = styled.span`
 
 export const HeaderUser = styled.div`
   display: flex;
-  width: 160px;
+  min-width: 160px;
   padding: ${indents.indent_2}px;
   align-items: center;
   justify-content: space-between;
 
   @media (max-width: 790px) {
-    width: 120px;
+    min-width: 120px;
   }
 `;
 
 export const HeaderUserName = styled.h2`
+  text-align: center;
+  width: 100%;
   font-weight: 600;
   color: ${colors.primaryText};
   font-size: ${fontSizes.fontPrimary}px;
+  margin-right: ${indents.indent_1}px;
 
   @media (max-width: 790px) {
     font-size: ${fontSizes.fontSmall}px;
@@ -117,15 +120,18 @@ export const HeaderUserName = styled.h2`
 `;
 
 export const HeaderUserPhotoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 45px;
-  width: 45px;
+  width: 65px;
   border-radius: 50%;
   box-shadow: 1px 1px 17px -9px black;
   overflow: hidden;
 
   @media (max-width: 790px) {
     height: 35px;
-    width: 35px;
+    width: 65px;
   }
 `;
 

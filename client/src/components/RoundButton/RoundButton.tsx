@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { NextButtonStyled } from './styled';
+import { RoundButtonStyled } from './styled';
 
 type NextButton = {
   text: string;
@@ -8,19 +8,21 @@ type NextButton = {
   $color: 'inactive' | 'accent' | 'primary';
   $top?: number;
   $right?: number;
+  $position: 'absolute' | 'fixed';
 };
 
-const NextButton = ({ text, action, $color, $top, $right }: NextButton) => {
+const RoundButton = ({ text, action, $color, $top, $right, $position }: NextButton) => {
   return (
-    <NextButtonStyled
+    <RoundButtonStyled
       onClick={action}
       $color={$color}
       $top={$top}
       $right={$right}
+      $position={$position}
     >
       {text}
-    </NextButtonStyled>
+    </RoundButtonStyled>
   );
 };
 
-export default NextButton;
+export default RoundButton;

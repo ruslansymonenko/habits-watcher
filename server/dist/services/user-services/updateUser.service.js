@@ -67,7 +67,7 @@ const updateUserName = (id, newName) => __awaiter(void 0, void 0, void 0, functi
         const userData = user.rows[0];
         const response = {
             isDone: true,
-            statusMessage: 'The password was successfully updated',
+            statusMessage: 'The name was successfully updated',
             user: userData,
         };
         return response;
@@ -89,7 +89,7 @@ const updateUserPhoto = (id, newPhoto) => __awaiter(void 0, void 0, void 0, func
         const userData = user.rows[0];
         const response = {
             isDone: true,
-            statusMessage: 'The password was successfully updated',
+            statusMessage: 'The photo was successfully updated',
             user: userData,
         };
         return response;

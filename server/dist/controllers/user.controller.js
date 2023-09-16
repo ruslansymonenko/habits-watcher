@@ -168,6 +168,7 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getUser = getUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;
+    console.log(userId);
     const { updateType, newData } = req.body;
     let updateServiceResponse = {
         isDone: false,
@@ -207,7 +208,7 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             default:
                 (0, logger_service_1.loggerService)('error', 'wrong type of updated data');
                 return res.json({
-                    message: 'the type of data being updated does not match any of the installed ones',
+                    message: 'The type of data being updated does not match any of the installed ones',
                 });
         }
         if (updateServiceResponse.isDone === true) {

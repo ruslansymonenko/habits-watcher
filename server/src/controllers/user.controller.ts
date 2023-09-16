@@ -169,6 +169,7 @@ export const getUser = async (req: CustomRequestWithID, res: Response): Promise<
 
 export const updateUser = async (req: CustomRequestWithID, res: Response): Promise<Response> => {
   const userId = req.userId;
+  console.log(userId);
   const { updateType, newData } = req.body;
   let updateServiceResponse: IUpdateUserResponse = {
     isDone: false,
@@ -209,7 +210,7 @@ export const updateUser = async (req: CustomRequestWithID, res: Response): Promi
       default:
         loggerService('error', 'wrong type of updated data');
         return res.json({
-          message: 'the type of data being updated does not match any of the installed ones',
+          message: 'The type of data being updated does not match any of the installed ones',
         });
     }
 
