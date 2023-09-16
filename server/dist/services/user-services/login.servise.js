@@ -39,6 +39,8 @@ const loginService = ({ email, password }) => __awaiter(void 0, void 0, void 0, 
                 const response = {
                     isDone: false,
                     statusMessage: 'Wrong password',
+                    user: null,
+                    token: null,
                 };
                 return response;
             }
@@ -47,6 +49,8 @@ const loginService = ({ email, password }) => __awaiter(void 0, void 0, void 0, 
             const response = {
                 isDone: false,
                 statusMessage: 'This user is not registered',
+                user: null,
+                token: null,
             };
             return response;
         }
@@ -55,6 +59,8 @@ const loginService = ({ email, password }) => __awaiter(void 0, void 0, void 0, 
         const response = {
             isDone: false,
             statusMessage: 'Some error, please, try later',
+            user: null,
+            token: null,
         };
         return response;
     }

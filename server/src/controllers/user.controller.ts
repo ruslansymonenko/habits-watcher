@@ -5,13 +5,15 @@ import { registrationService } from '../services/user-services/registration.serv
 import { loginService } from '../services/user-services/login.servise';
 import { deleteUserService } from '../services/user-services/deleteUser.service';
 import { updateUserService } from '../services/user-services/updateUser.service';
+import { getUserService, IGetUserResponse } from '../services/user-services/getUser.service';
 
 import { IUpdateUserResponse } from '../services/user-services/updateUser.service';
 import { userData, IRegistrationResponse } from '../types/userType';
+import { CustomRequestWithID } from '../types/userType';
 
-interface authResponse {
+interface IAuthResponse {
   isRequestDone: boolean;
-  message: string;
+  message: string | null;
   user: null | userData;
   token: null | string;
 }
@@ -27,7 +29,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
 
       if (userRegistration.isDone) {
         loggerService('success', 'successful registration');
-        const response: authResponse = {
+        const response: IAuthResponse = {
           isRequestDone: true,
           message: userRegistration.statusMessage,
           user: userRegistration.user,
@@ -36,7 +38,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
         return res.json(response);
       } else {
         loggerService('error', 'registration error, registrationService: isDone=false');
-        const response: authResponse = {
+        const response: IAuthResponse = {
           isRequestDone: false,
           message: userRegistration.statusMessage,
           user: userRegistration.user,
@@ -46,7 +48,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
       }
     } catch (error) {
       loggerService('error', `${error}`);
-      const response: authResponse = {
+      const response: IAuthResponse = {
         isRequestDone: false,
         message: 'Wrong auth data was sent to the server, check do you send email and password',
         user: null,
@@ -56,7 +58,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
     }
   } else {
     loggerService('error', 'Wrong auth data');
-    const response: authResponse = {
+    const response: IAuthResponse = {
       isRequestDone: false,
       message: 'Wrong auth data was sent to the server, check do you send email and password',
       user: null,
@@ -77,54 +79,104 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
       if (userLogin.isDone) {
         loggerService('success', 'successful login');
-        return res.json({
+        const serverResponse: IAuthResponse = {
+          isRequestDone: userLogin.isDone,
           message: userLogin.statusMessage,
           user: userLogin.user,
           token: userLogin.token,
-        });
+        };
+
+        return res.json(serverResponse);
       } else {
         loggerService('error', 'login error, loginServicee: isDone=false');
-        return res.json({
+        const serverResponse: IAuthResponse = {
+          isRequestDone: userLogin.isDone,
           message: userLogin.statusMessage,
-        });
+          user: userLogin.user,
+          token: userLogin.token,
+        };
+
+        return res.json(serverResponse);
       }
     } catch (error) {
       loggerService('error', `${error}`);
-      return res.json({
+      const serverResponse: IAuthResponse = {
+        isRequestDone: false,
         message: 'Wrong auth data was sent to the server, check do you send email and password',
-      });
+        user: null,
+        token: null,
+      };
+
+      return res.json(serverResponse);
     }
   } else {
     loggerService('error', 'Wrong auth data');
-    return res.json({
+    const serverResponse: IAuthResponse = {
+      isRequestDone: false,
       message: 'Wrong auth data was sent to the server, check do you send email and password',
-    });
+      user: null,
+      token: null,
+    };
+
+    return res.json(serverResponse);
   }
 };
 
-export const getUser = (req: Request, res: Response): Response => {
-  const userId = req.params.id;
+export const getUser = async (req: CustomRequestWithID, res: Response): Promise<Response> => {
+  try {
+    const userId = req.userId;
 
-  if (userId) {
-    return res.json({
-      message: 'get user',
-    });
-  } else {
-    return res.json({
-      message: 'get user',
-    });
+    if (userId) {
+      const getUserResponse: IGetUserResponse = await getUserService({ id: userId });
+
+      if (getUserResponse.isDone) {
+        const serverResponse: IAuthResponse = {
+          isRequestDone: getUserResponse.isDone,
+          message: null,
+          user: getUserResponse.user,
+          token: getUserResponse.token,
+        };
+        return res.json(serverResponse);
+      } else {
+        const serverResponse: IAuthResponse = {
+          isRequestDone: getUserResponse.isDone,
+          message: getUserResponse.statusMessage,
+          user: getUserResponse.user,
+          token: getUserResponse.token,
+        };
+        return res.json(serverResponse);
+      }
+    } else {
+      const serverResponse: IAuthResponse = {
+        isRequestDone: false,
+        message: 'User id was not founded',
+        user: null,
+        token: null,
+      };
+      return res.json(serverResponse);
+    }
+  } catch (error) {
+    loggerService('error', `${error}`);
+    const serverResponse: IAuthResponse = {
+      isRequestDone: false,
+      message: 'Some error, please try later',
+      user: null,
+      token: null,
+    };
+    return res.json(serverResponse);
   }
 };
 
-export const updateUser = async (req: Request, res: Response): Promise<Response> => {
-  const { updateType, userId, newData } = req.body;
+export const updateUser = async (req: CustomRequestWithID, res: Response): Promise<Response> => {
+  const userId = req.userId;
+  const { updateType, newData } = req.body;
   let updateServiceResponse: IUpdateUserResponse = {
     isDone: false,
     statusMessage: '',
     user: null,
   };
 
-  if (updateType && newData) {
+  if (updateType && newData && userId) {
     switch (updateType) {
       case 'email':
         updateServiceResponse = await updateUserService({
@@ -174,21 +226,22 @@ export const updateUser = async (req: Request, res: Response): Promise<Response>
       });
     }
   } else {
-    loggerService('error', 'updateType and newData is required for update');
+    loggerService(
+      'error',
+      'updateType and newData is required for update, or userid was not found',
+    );
     return res.json({
-      message: 'For update data is required: update type and new data',
+      message: 'For update data is required: update type and new data, or userid was not found',
     });
   }
 };
 
-export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
-  const userId = req.params.id;
+export const deleteUser = async (req: CustomRequestWithID, res: Response): Promise<Response> => {
+  const userId = req.userId;
 
   if (userId) {
     try {
-      const deleteUser = await deleteUserService({
-        id: userId,
-      });
+      const deleteUser = await deleteUserService({ id: userId });
 
       if (deleteUser.isDone) {
         loggerService('success', `User: ${userId} was deleted`);

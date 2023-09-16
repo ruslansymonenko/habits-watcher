@@ -1,32 +1,40 @@
-// import { Request, Response, NextFunction } from 'express';
-// import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { CustomRequestWithID } from '../types/userType';
 
-// interface Itoken {
-//   userId: string;
-//   iat: string;
-//   exp: string;
+// interface CustomRequest extends Request {
+//   userId?: string;
 // }
 
-// export const checkAuth = (req: Request, res: Response, next: NextFunction): Response | void => {
-//   const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+export const checkAuth = (
+  req: CustomRequestWithID,
+  res: Response,
+  next: NextFunction,
+): Response | void => {
+  const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
 
-//   if (token) {
-//     try {
-//       const JWT_SECRET = process.env.JWT_SECRET ? process.env.JWT_SECRET.toString() : '';
+  if (token) {
+    try {
+      const JWT_SECRET = process.env.JWT_SECRET ? process.env.JWT_SECRET.toString() : '';
 
-//       const decodedToken: Itoken = jwt.verify(token, JWT_SECRET);
+      const decodedToken = jwt.verify(token, JWT_SECRET) as JwtPayload;
 
-//       req.userId = decodedToken.userId;
-
-//       next();
-//     } catch (error) {
-//       return res.json({
-//         message: 'No access',
-//       });
-//     }
-//   } else {
-//     return res.json({
-//       message: 'No access',
-//     });
-//   }
-// };
+      if (decodedToken.userId) {
+        req.userId = decodedToken.userId;
+        next();
+      } else {
+        return res.json({
+          message: 'No token',
+        });
+      }
+    } catch (error) {
+      return res.json({
+        message: 'No access',
+      });
+    }
+  } else {
+    return res.json({
+      message: 'No access',
+    });
+  }
+};

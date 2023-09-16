@@ -1,16 +1,15 @@
 import database from '../../database/database';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 interface IGetUserProps {
   id: string;
 }
 
-interface IGetUserResponse {
+export interface IGetUserResponse {
   isDone: boolean;
   statusMessage: string;
-  user?: userData;
-  token?: string;
+  user: userData | null;
+  token: string | null;
 }
 
 type userData = {
@@ -22,7 +21,7 @@ type userData = {
   created_date: string;
 };
 
-export const loginService = async ({ id }: IGetUserProps): Promise<IGetUserResponse> => {
+export const getUserService = async ({ id }: IGetUserProps): Promise<IGetUserResponse> => {
   try {
     const checkIsUser = await database.query('SELECT * FROM users WHERE id = $1', [id]);
 
@@ -50,6 +49,8 @@ export const loginService = async ({ id }: IGetUserProps): Promise<IGetUserRespo
       const response: IGetUserResponse = {
         isDone: false,
         statusMessage: 'This user is not registered',
+        user: null,
+        token: null,
       };
 
       return response;
@@ -58,6 +59,8 @@ export const loginService = async ({ id }: IGetUserProps): Promise<IGetUserRespo
     const response: IGetUserResponse = {
       isDone: false,
       statusMessage: 'Some error, please, try later',
+      user: null,
+      token: null,
     };
 
     return response;

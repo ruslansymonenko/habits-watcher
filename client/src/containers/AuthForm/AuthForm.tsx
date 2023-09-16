@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { AppDispatch } from '../../store';
+import { AppDispatch, RootState } from '../../store';
 
-import { registerUser } from '../../store/slices/userSlices/authSlice';
+import { registerUser, loginUser } from '../../store/slices/userSlices/authSlice';
 import {
   emailValidation,
   passwordValidation,
@@ -18,6 +17,7 @@ import { AuthFormStyled, AuthFormLabel, AuthFormInput, AuthFormBtns } from './st
 import { Container, Content } from '../../App.styled';
 
 type AuthFormType = 'login' | 'register';
+type AuthStatus = string | null;
 
 interface AuthFormProps {
   formType: AuthFormType;
@@ -26,7 +26,8 @@ interface AuthFormProps {
 const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
   const [emailInputValue, setEmailInputValue] = useState('');
   const [passwordInputValue, setPasswordInputValue] = useState('');
-  const navigate = useNavigate();
+  const authStatus: AuthStatus = useSelector((state: RootState) => state.auth.status);
+  const authIsRequestDone: boolean = useSelector((state: RootState) => state.auth.isRequestDone);
   const dispatch: AppDispatch = useDispatch();
 
   const validateForm = (email: string, password: string): boolean => {
@@ -54,14 +55,18 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
       let validation = validateForm(emailInputValue, passwordInputValue);
 
       if (validation) {
-        console.log('yes');
+        dispatch(
+          loginUser({
+            email: emailInputValue,
+            password: passwordInputValue,
+          }),
+        );
         clearForm();
       }
     } else if (formType === 'register') {
       let validation = validateForm(emailInputValue, passwordInputValue);
 
       if (validation) {
-        console.log('yes');
         dispatch(registerUser({ email: emailInputValue, password: passwordInputValue }));
         clearForm();
       }
@@ -77,6 +82,16 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType }) => {
     event.preventDefault();
     clearForm();
   };
+
+  useEffect(() => {
+    if (authStatus) {
+      if (authIsRequestDone) {
+        toast.success(authStatus);
+      } else {
+        toast.error(authStatus);
+      }
+    }
+  }, [authStatus]);
 
   return (
     <AuthFormStyled>

@@ -12,8 +12,8 @@ interface ILoginProps {
 interface ILoginResponse {
   isDone: boolean;
   statusMessage: string;
-  user?: userData;
-  token?: string;
+  user: userData | null;
+  token: string | null;
 }
 
 // type userData = {
@@ -55,6 +55,8 @@ export const loginService = async ({ email, password }: ILoginProps): Promise<IL
         const response: ILoginResponse = {
           isDone: false,
           statusMessage: 'Wrong password',
+          user: null,
+          token: null,
         };
 
         return response;
@@ -63,6 +65,8 @@ export const loginService = async ({ email, password }: ILoginProps): Promise<IL
       const response: ILoginResponse = {
         isDone: false,
         statusMessage: 'This user is not registered',
+        user: null,
+        token: null,
       };
 
       return response;
@@ -71,6 +75,8 @@ export const loginService = async ({ email, password }: ILoginProps): Promise<IL
     const response: ILoginResponse = {
       isDone: false,
       statusMessage: 'Some error, please, try later',
+      user: null,
+      token: null,
     };
 
     return response;

@@ -1,17 +1,19 @@
 import React, { Suspense, ReactNode, useEffect } from 'react';
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState } from '../store';
+import { checkIsAuth } from '../store/slices/userSlices/authSlice';
 import { routes } from './Routes';
 
 import Layout from '../layout/Layout';
 import Loader from '../components/Loader/Loader';
 
-export const AppRouter = () => {
-  const navigate = useNavigate();
+interface IAppRouterProps {
+  isAuth: boolean;
+}
 
-  const isAuth: boolean = useSelector((state: RootState) => state.auth.isAuth);
+export const AppRouter = ({ isAuth }: IAppRouterProps) => {
+  const navigate = useNavigate();
 
   const PrivateRoute = ({ children }: { children: ReactNode }): JSX.Element => {
     return isAuth ? <>{children}</> : <Navigate to="/" />;
@@ -21,8 +23,7 @@ export const AppRouter = () => {
     if (isAuth) {
       navigate('/home');
     } else if (!isAuth) {
-      //isAccount is for test, then it shold be navigate('/');
-      navigate('/isAccount');
+      navigate('/');
     }
   }, [isAuth]);
 

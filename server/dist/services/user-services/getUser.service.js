@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginService = void 0;
+exports.getUserService = void 0;
 const database_1 = __importDefault(require("../../database/database"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const loginService = ({ id }) => __awaiter(void 0, void 0, void 0, function* () {
+const getUserService = ({ id }) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const checkIsUser = yield database_1.default.query('SELECT * FROM users WHERE id = $1', [id]);
         if (checkIsUser.rows.length > 0) {
@@ -36,6 +36,8 @@ const loginService = ({ id }) => __awaiter(void 0, void 0, void 0, function* () 
             const response = {
                 isDone: false,
                 statusMessage: 'This user is not registered',
+                user: null,
+                token: null,
             };
             return response;
         }
@@ -44,8 +46,10 @@ const loginService = ({ id }) => __awaiter(void 0, void 0, void 0, function* () 
         const response = {
             isDone: false,
             statusMessage: 'Some error, please, try later',
+            user: null,
+            token: null,
         };
         return response;
     }
 });
-exports.loginService = loginService;
+exports.getUserService = getUserService;

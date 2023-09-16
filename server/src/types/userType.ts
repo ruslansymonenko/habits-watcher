@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 export type userData = {
   id: number;
   email: string;
@@ -12,4 +14,8 @@ export interface IRegistrationResponse {
   statusMessage: string;
   user: userData | null;
   token: null | string;
+}
+
+export interface CustomRequestWithID extends Request {
+  userId?: string;
 }

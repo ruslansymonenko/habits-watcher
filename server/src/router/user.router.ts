@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { register, login, getUser, updateUser, deleteUser } from '../controllers/user.controller';
+import { checkAuth } from '../middlewares/checkAuth';
 
 const userRouter: Router = Router();
 
@@ -8,10 +9,10 @@ userRouter.post('/register', register);
 
 userRouter.post('/login', login);
 
-userRouter.get('/get/:id', getUser);
+userRouter.get('/get', checkAuth, getUser);
 
-userRouter.put('/update', updateUser);
+userRouter.put('/update', checkAuth, updateUser);
 
-userRouter.delete('/delete/:id', deleteUser);
+userRouter.post('/delete', checkAuth, deleteUser);
 
 export default userRouter;

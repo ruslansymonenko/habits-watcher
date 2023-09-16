@@ -15,6 +15,7 @@ const registration_service_1 = require("../services/user-services/registration.s
 const login_servise_1 = require("../services/user-services/login.servise");
 const deleteUser_service_1 = require("../services/user-services/deleteUser.service");
 const updateUser_service_1 = require("../services/user-services/updateUser.service");
+const getUser_service_1 = require("../services/user-services/getUser.service");
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (email && password) {
@@ -77,56 +78,103 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
             if (userLogin.isDone) {
                 (0, logger_service_1.loggerService)('success', 'successful login');
-                return res.json({
+                const serverResponse = {
+                    isRequestDone: userLogin.isDone,
                     message: userLogin.statusMessage,
                     user: userLogin.user,
                     token: userLogin.token,
-                });
+                };
+                return res.json(serverResponse);
             }
             else {
                 (0, logger_service_1.loggerService)('error', 'login error, loginServicee: isDone=false');
-                return res.json({
+                const serverResponse = {
+                    isRequestDone: userLogin.isDone,
                     message: userLogin.statusMessage,
-                });
+                    user: userLogin.user,
+                    token: userLogin.token,
+                };
+                return res.json(serverResponse);
             }
         }
         catch (error) {
             (0, logger_service_1.loggerService)('error', `${error}`);
-            return res.json({
+            const serverResponse = {
+                isRequestDone: false,
                 message: 'Wrong auth data was sent to the server, check do you send email and password',
-            });
+                user: null,
+                token: null,
+            };
+            return res.json(serverResponse);
         }
     }
     else {
         (0, logger_service_1.loggerService)('error', 'Wrong auth data');
-        return res.json({
+        const serverResponse = {
+            isRequestDone: false,
             message: 'Wrong auth data was sent to the server, check do you send email and password',
-        });
+            user: null,
+            token: null,
+        };
+        return res.json(serverResponse);
     }
 });
 exports.login = login;
-const getUser = (req, res) => {
-    const userId = req.params.id;
-    if (userId) {
-        return res.json({
-            message: 'get user',
-        });
+const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.userId;
+        if (userId) {
+            const getUserResponse = yield (0, getUser_service_1.getUserService)({ id: userId });
+            if (getUserResponse.isDone) {
+                const serverResponse = {
+                    isRequestDone: getUserResponse.isDone,
+                    message: null,
+                    user: getUserResponse.user,
+                    token: getUserResponse.token,
+                };
+                return res.json(serverResponse);
+            }
+            else {
+                const serverResponse = {
+                    isRequestDone: getUserResponse.isDone,
+                    message: getUserResponse.statusMessage,
+                    user: getUserResponse.user,
+                    token: getUserResponse.token,
+                };
+                return res.json(serverResponse);
+            }
+        }
+        else {
+            const serverResponse = {
+                isRequestDone: false,
+                message: 'User id was not founded',
+                user: null,
+                token: null,
+            };
+            return res.json(serverResponse);
+        }
     }
-    else {
-        return res.json({
-            message: 'get user',
-        });
+    catch (error) {
+        (0, logger_service_1.loggerService)('error', `${error}`);
+        const serverResponse = {
+            isRequestDone: false,
+            message: 'Some error, please try later',
+            user: null,
+            token: null,
+        };
+        return res.json(serverResponse);
     }
-};
+});
 exports.getUser = getUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { updateType, userId, newData } = req.body;
+    const userId = req.userId;
+    const { updateType, newData } = req.body;
     let updateServiceResponse = {
         isDone: false,
         statusMessage: '',
         user: null,
     };
-    if (updateType && newData) {
+    if (updateType && newData && userId) {
         switch (updateType) {
             case 'email':
                 updateServiceResponse = yield (0, updateUser_service_1.updateUserService)({
@@ -177,20 +225,18 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
     }
     else {
-        (0, logger_service_1.loggerService)('error', 'updateType and newData is required for update');
+        (0, logger_service_1.loggerService)('error', 'updateType and newData is required for update, or userid was not found');
         return res.json({
-            message: 'For update data is required: update type and new data',
+            message: 'For update data is required: update type and new data, or userid was not found',
         });
     }
 });
 exports.updateUser = updateUser;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const userId = req.params.id;
+    const userId = req.userId;
     if (userId) {
         try {
-            const deleteUser = yield (0, deleteUser_service_1.deleteUserService)({
-                id: userId,
-            });
+            const deleteUser = yield (0, deleteUser_service_1.deleteUserService)({ id: userId });
             if (deleteUser.isDone) {
                 (0, logger_service_1.loggerService)('success', `User: ${userId} was deleted`);
                 return res.json({

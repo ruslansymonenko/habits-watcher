@@ -50,3 +50,16 @@ export const SidePanelNavImage = styled.img`
   height: 22px;
   margin-right: ${indents.indent_3}px;
 `;
+
+export const SidePanelLogOutBtn = styled.button`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  & span {
+    color: ${colors.lightText};
+  }
+`;
