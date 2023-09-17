@@ -1,9 +1,8 @@
-import React, { Suspense, ReactNode, useEffect } from 'react';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { checkIsAuth } from '../store/slices/userSlices/authSlice';
+import React, { Suspense, ReactNode, useEffect, useState } from 'react';
+import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { routes } from './Routes';
+
+// import { manageRoutes, IManageRoutes } from '../helpers/manageRoutes';
 
 import Layout from '../layout/Layout';
 import Loader from '../components/Loader/Loader';
@@ -14,6 +13,7 @@ interface IAppRouterProps {
 
 export const AppRouter = ({ isAuth }: IAppRouterProps) => {
   const navigate = useNavigate();
+  const [firstEntry, setFirstEntry] = useState(true);
 
   const PrivateRoute = ({ children }: { children: ReactNode }): JSX.Element => {
     return isAuth ? <>{children}</> : <Navigate to="/" />;
@@ -22,7 +22,7 @@ export const AppRouter = ({ isAuth }: IAppRouterProps) => {
   useEffect(() => {
     if (isAuth) {
       navigate('/home');
-    } else if (!isAuth) {
+    } else if (!isAuth && firstEntry) {
       navigate('/');
     }
   }, [isAuth]);

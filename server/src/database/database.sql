@@ -10,9 +10,11 @@ CREATE TABLE users(
 CREATE TABLE habits(
   id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
-  habitCondition VARCHAR(255),
+  habit_condition VARCHAR(255),
   color VARCHAR(255),
-  user_id INT REFERENCES users(id)
+  user_id INT REFERENCES users(id);
+  week_days: INTEGER[], /*Can be only numbers 1,2,3,4,5,6,7 each number it's number of day from monday to sunday*/
+  created_date: TIMESTAMP DEFAULT NOW(),
 );
 
 CREATE TABLE user_logs(

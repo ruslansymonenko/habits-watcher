@@ -16,6 +16,10 @@ const getCurrentTime = (type) => {
         const day = String(now.getDate()).padStart(2, '0');
         return `${day}-${month}-${year}`;
     };
+    const getYear = () => {
+        const year = String(now.getFullYear());
+        return year;
+    };
     if (type === 'time') {
         const currentTime = getTime();
         result = currentTime;
@@ -28,6 +32,10 @@ const getCurrentTime = (type) => {
         const currentTime = getTime();
         const currentDate = getDate();
         result = `${currentTime} ${currentDate}`;
+    }
+    if (type === 'year') {
+        const year = getYear();
+        result = year;
     }
     return result;
 };
