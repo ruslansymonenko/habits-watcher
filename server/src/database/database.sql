@@ -15,6 +15,7 @@ CREATE TABLE habits(
   user_id INT REFERENCES users(id);
   week_days: INTEGER[], /*Can be only numbers 1,2,3,4,5,6,7 each number it's number of day from monday to sunday*/
   created_date: TIMESTAMP DEFAULT NOW(),
+  habit_day_start: DATE, /*year-month-date*/
 );
 
 CREATE TABLE user_logs(

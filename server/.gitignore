@@ -2,3 +2,5 @@ node_modules
 buid
 
 .env
+
+src/uploads/users
