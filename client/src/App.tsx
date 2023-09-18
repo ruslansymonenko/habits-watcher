@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { AppDispatch } from './store';
 import { AppRouter } from './router/Router';
 import { checkIsAuth, getUser } from './store/slices/userSlices/authSlice';
+import { getMainData } from './store/slices/dataSlices/mainDataSlice';
 
 import { AppStyles } from './App.styled';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,6 +16,10 @@ function App() {
 
   useEffect(() => {
     dispatch(getUser());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getMainData());
   }, []);
 
   return (

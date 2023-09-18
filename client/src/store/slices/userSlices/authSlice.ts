@@ -4,7 +4,7 @@ import { RootState } from '../..';
 
 import { IUserData, IDataForAuth, IServerAuthResponse } from '../../../types/serverTypes';
 
-interface AuthSlice {
+interface IAuthSlice {
   isRequestDone: boolean;
   user: null | IUserData;
   token: null | string;
@@ -12,7 +12,7 @@ interface AuthSlice {
   status: null | string;
 }
 
-const initialState: AuthSlice = {
+const initialState: IAuthSlice = {
   isRequestDone: false,
   user: null,
   token: null,
@@ -85,7 +85,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logOut: (state: AuthSlice) => {
+    logOut: (state: IAuthSlice) => {
       state.isLoading = false;
       state.user = null;
       state.token = null;
@@ -96,12 +96,12 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     //Registration
-    builder.addCase(registerUser.pending, (state: AuthSlice) => {
+    builder.addCase(registerUser.pending, (state: IAuthSlice) => {
       state.isLoading = true;
     });
     builder.addCase(
       registerUser.fulfilled,
-      (state: AuthSlice, action: PayloadAction<IServerAuthResponse>) => {
+      (state: IAuthSlice, action: PayloadAction<IServerAuthResponse>) => {
         state.isLoading = false;
         state.isRequestDone = action.payload.isRequestDone;
         state.user = action.payload.user;
@@ -109,16 +109,16 @@ const authSlice = createSlice({
         state.status = action.payload.message;
       },
     );
-    builder.addCase(registerUser.rejected, (state: AuthSlice) => {
+    builder.addCase(registerUser.rejected, (state: IAuthSlice) => {
       state.isLoading = false;
     });
     //Login
-    builder.addCase(loginUser.pending, (state: AuthSlice) => {
+    builder.addCase(loginUser.pending, (state: IAuthSlice) => {
       state.isLoading = true;
     });
     builder.addCase(
       loginUser.fulfilled,
-      (state: AuthSlice, action: PayloadAction<IServerAuthResponse>) => {
+      (state: IAuthSlice, action: PayloadAction<IServerAuthResponse>) => {
         state.isLoading = false;
         state.isRequestDone = action.payload.isRequestDone;
         state.user = action.payload.user;
@@ -126,22 +126,22 @@ const authSlice = createSlice({
         state.status = action.payload.message;
       },
     );
-    builder.addCase(loginUser.rejected, (state: AuthSlice) => {
+    builder.addCase(loginUser.rejected, (state: IAuthSlice) => {
       state.isLoading = false;
     });
     //Get user
-    builder.addCase(getUser.pending, (state: AuthSlice) => {
+    builder.addCase(getUser.pending, (state: IAuthSlice) => {
       state.isLoading = true;
     });
     builder.addCase(
       getUser.fulfilled,
-      (state: AuthSlice, action: PayloadAction<IServerAuthResponse>) => {
+      (state: IAuthSlice, action: PayloadAction<IServerAuthResponse>) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
       },
     );
-    builder.addCase(getUser.rejected, (state: AuthSlice) => {
+    builder.addCase(getUser.rejected, (state: IAuthSlice) => {
       state.isLoading = false;
     });
   },
