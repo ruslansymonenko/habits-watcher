@@ -16,8 +16,8 @@ const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     var _a;
     try {
         const userId = (_a = req.userId) === null || _a === void 0 ? void 0 : _a.toString();
-        const { title, habit_condition, color, week_days, habit_day_start } = req.body;
-        if (!title || !habit_condition || !color || !userId || !week_days) {
+        const { title, habit_condition, color, week_days, habit_day_start, habit_icon } = req.body;
+        if (!title || !habit_condition || !color || !userId || !habit_day_start) {
             const response = {
                 isDone: false,
                 statusMessage: 'Not correct data',
@@ -45,7 +45,8 @@ const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             typeof habit_condition === 'string' &&
             typeof color === 'string' &&
             typeof userId === 'string' &&
-            typeof habit_day_start === 'string') {
+            typeof habit_day_start === 'string' &&
+            typeof habit_icon === 'string') {
             const newHabit = yield (0, createHabit_service_1.createNewHabit)({
                 title: title,
                 habit_condition: habit_condition,
@@ -53,6 +54,7 @@ const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 user_id: userId,
                 week_days: week_days,
                 habit_day_start: habit_day_start,
+                habit_icon: habit_icon,
             });
             const response = {
                 isDone: newHabit.isDone,

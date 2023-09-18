@@ -8,6 +8,7 @@ export const createNewHabit = async ({
   user_id,
   week_days,
   habit_day_start,
+  habit_icon,
 }: IHabit): Promise<IHabitResponse> => {
   const result: IHabitResponse = {
     isDone: false,
@@ -16,11 +17,11 @@ export const createNewHabit = async ({
 
   try {
     const query = `
-      INSERT INTO habits (title, habit_condition, color, user_id, week_days, habit_day_start)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO habits (title, habit_condition, color, user_id, week_days, habit_day_start, habit_icon)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
-    const values = [title, habit_condition, color, user_id, week_days, habit_day_start];
+    const values = [title, habit_condition, color, user_id, week_days, habit_day_start, habit_icon];
     const newHabit = await database.query(query, values);
 
     if (newHabit.rows.length > 0) {

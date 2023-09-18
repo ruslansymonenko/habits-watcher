@@ -9,9 +9,9 @@ import { createNewHabit } from '../services/habits-services/createHabit.service'
 export const createHabit = async (req: CustomRequestWithID, res: Response): Promise<Response> => {
   try {
     const userId = req.userId?.toString();
-    const { title, habit_condition, color, week_days, habit_day_start } = req.body;
+    const { title, habit_condition, color, week_days, habit_day_start, habit_icon } = req.body;
 
-    if (!title || !habit_condition || !color || !userId || !week_days) {
+    if (!title || !habit_condition || !color || !userId || !habit_day_start) {
       const response: IHabitResponse = {
         isDone: false,
         statusMessage: 'Not correct data',
@@ -43,7 +43,8 @@ export const createHabit = async (req: CustomRequestWithID, res: Response): Prom
       typeof habit_condition === 'string' &&
       typeof color === 'string' &&
       typeof userId === 'string' &&
-      typeof habit_day_start === 'string'
+      typeof habit_day_start === 'string' &&
+      typeof habit_icon === 'string'
     ) {
       const newHabit = await createNewHabit({
         title: title,
@@ -52,6 +53,7 @@ export const createHabit = async (req: CustomRequestWithID, res: Response): Prom
         user_id: userId,
         week_days: week_days,
         habit_day_start: habit_day_start,
+        habit_icon: habit_icon,
       });
 
       const response: IHabitResponse = {

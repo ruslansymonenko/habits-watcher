@@ -10,12 +10,14 @@ export interface IMainDataHabit {
 }
 
 export interface IMainDataDay {
-  data: string;
+  date: string;
   dayOfTheWeek: string;
   dayOfWeekNumber: number;
-  habits: IMainDataHabit[];
+  habits: IMainDataHabit[] | null;
 }
 
 export interface IMainDataResponse {
-  data: Record<Year, YearData>;
+  isDone: boolean;
+  data: Record<Year, YearData> | null;
+  statusMessage: string | null;
 }

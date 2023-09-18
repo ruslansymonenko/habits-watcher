@@ -7,6 +7,7 @@ export interface IHabit {
   user_id: string;
   week_days: WeekDays[];
   habit_day_start: string;
+  habit_icon: string;
 }
 
 export interface IHabitResponse {

@@ -14,18 +14,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createNewHabit = void 0;
 const database_1 = __importDefault(require("../../database/database"));
-const createNewHabit = ({ title, habit_condition, color, user_id, week_days, habit_day_start, }) => __awaiter(void 0, void 0, void 0, function* () {
+const createNewHabit = ({ title, habit_condition, color, user_id, week_days, habit_day_start, habit_icon, }) => __awaiter(void 0, void 0, void 0, function* () {
     const result = {
         isDone: false,
         statusMessage: null,
     };
     try {
         const query = `
-      INSERT INTO habits (title, habit_condition, color, user_id, week_days, habit_day_start)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO habits (title, habit_condition, color, user_id, week_days, habit_day_start, habit_icon)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
-        const values = [title, habit_condition, color, user_id, week_days, habit_day_start];
+        const values = [title, habit_condition, color, user_id, week_days, habit_day_start, habit_icon];
         const newHabit = yield database_1.default.query(query, values);
         if (newHabit.rows.length > 0) {
             result.isDone = true;
