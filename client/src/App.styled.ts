@@ -71,6 +71,10 @@ export const AppStyles = createGlobalStyle`
     color: inherit;
   }
 
+  button{
+    border: none;
+  }
+
   body {
   font-family: 'Montserrat', sans-serif;
   color: ${colors.primaryText};

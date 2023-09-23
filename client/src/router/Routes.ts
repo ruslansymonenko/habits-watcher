@@ -15,6 +15,7 @@ const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
 
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
+const HabitsPage = lazy(() => import('../pages/HabitsPage/HabitsPage'));
 const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
 const SettingsPage = lazy(() => import('../pages/SettingsPage/SettingsPage'));
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'));
@@ -58,6 +59,11 @@ export const routes: Route = [
   {
     path: '/settings',
     element: SettingsPage,
+    private: true,
+  },
+  {
+    path: '/habits',
+    element: HabitsPage,
     private: true,
   },
   {

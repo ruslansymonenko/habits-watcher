@@ -16,6 +16,7 @@ import homeImage from '../../assets/icons/navigation-images/home.svg';
 import profileImage from '../../assets/icons/navigation-images/account.svg';
 import settingsImage from '../../assets/icons/navigation-images/settings.svg';
 import logoutImage from '../../assets/icons/logout.svg';
+import habitsImage from '../../assets/icons/navigation-images//task.svg';
 
 const SidePanel: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -33,6 +34,13 @@ const SidePanel: React.FC = () => {
             alt="home"
           />
           <Link to="/home">Home</Link>
+        </SidePanelNavListItem>
+        <SidePanelNavListItem>
+          <SidePanelNavImage
+            src={habitsImage}
+            alt="settings"
+          />
+          <Link to="/habits">Habits</Link>
         </SidePanelNavListItem>
         <SidePanelNavListItem>
           <SidePanelNavImage

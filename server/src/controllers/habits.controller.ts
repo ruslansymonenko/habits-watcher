@@ -78,6 +78,12 @@ export const createHabit = async (req: CustomRequestWithID, res: Response): Prom
   }
 };
 
+export const getHabits = (req: CustomRequestWithID, res: Response): Response => {
+  return res.json({
+    message: 'hello',
+  });
+};
+
 export const updateHabit = (req: Request, res: Response): Response => {
   return res.json({
     message: 'update',

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteHabit = exports.updateHabit = exports.createHabit = void 0;
+exports.deleteHabit = exports.updateHabit = exports.getHabits = exports.createHabit = void 0;
 const logger_service_1 = require("../services/logger.service");
 const createHabit_service_1 = require("../services/habits-services/createHabit.service");
 const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -80,6 +80,12 @@ const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.createHabit = createHabit;
+const getHabits = (req, res) => {
+    return res.json({
+        message: 'hello',
+    });
+};
+exports.getHabits = getHabits;
 const updateHabit = (req, res) => {
     return res.json({
         message: 'update',
