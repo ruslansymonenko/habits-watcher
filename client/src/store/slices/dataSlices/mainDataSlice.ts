@@ -1,13 +1,30 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from '../../../utils/axios';
 
-import { IMainData, IMainDataResponse, YearData, Year } from '../../../types/serverTypes';
+import {
+  IMainData,
+  IMainDataHabit,
+  IMainDataResponse,
+  YearData,
+  Year,
+} from '../../../types/serverTypes';
 
 interface IMainDataSlice {
   isDone: boolean;
   mainData: Record<Year, YearData> | null;
   status: string | null;
   isLoading: boolean;
+  currentYear: string | null;
+  currentDay: string | null;
+  currentDayHabits: IMainDataHabit[] | null;
+}
+
+interface IYear {
+  year: string | 'current';
+}
+
+interface IDay {
+  day: string;
 }
 
 const initialState: IMainDataSlice = {
@@ -15,6 +32,9 @@ const initialState: IMainDataSlice = {
   mainData: null,
   status: null,
   isLoading: false,
+  currentYear: null,
+  currentDay: null,
+  currentDayHabits: null,
 };
 
 export const getMainData = createAsyncThunk('mainData/get', async () => {
@@ -30,7 +50,23 @@ export const getMainData = createAsyncThunk('mainData/get', async () => {
 const mainDataSlice = createSlice({
   name: 'mainData',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentYear: (state: IMainDataSlice, action: PayloadAction<IYear>) => {
+      if (action.payload.year === 'current') {
+        const date = new Date();
+        const year = date.getFullYear().toString();
+        state.currentYear = year;
+      } else {
+        state.currentYear = action.payload.year;
+      }
+    },
+    setCurrentDay: (state: IMainDataSlice, action: PayloadAction<IDay>) => {
+      state.currentDay = action.payload.day;
+    },
+    setDayHabits: (state: IMainDataSlice, action: PayloadAction<IMainDataHabit[]>) => {
+      state.currentDayHabits = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(getMainData.pending, (state: IMainDataSlice) => {
       state.isLoading = true;
@@ -49,5 +85,7 @@ const mainDataSlice = createSlice({
     });
   },
 });
+
+export const { setCurrentYear, setCurrentDay, setDayHabits } = mainDataSlice.actions;
 
 export default mainDataSlice.reducer;

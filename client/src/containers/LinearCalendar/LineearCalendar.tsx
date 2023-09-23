@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../store';
 
 import { generateYearArray, Day } from '../../helpers/generateYearArray';
 import { getCurrentTime } from '../../helpers/getCurrentTime';
+import { setCurrentDay, setDayHabits } from '../../store/slices/dataSlices/mainDataSlice';
 
 import { IMainDataDay } from '../../types/serverTypes';
 
@@ -19,11 +20,16 @@ type changeDayFrame = 'prev' | 'next';
 
 const LineearCalendar: React.FC = () => {
   const mainData = useSelector((state: RootState) => state.mainData.mainData);
-  // const [daysOfYear, setDaysOfYear] = useState<Day[]>([]);
+  const currentDay = useSelector((state: RootState) => state.mainData.currentDay);
+  const currentYear = useSelector((state: RootState) => state.mainData.currentYear);
+  const currentDayHabits = useSelector((state: RootState) => state.mainData.currentDayHabits);
+
   const [daysOfYear, setDaysOfYear] = useState<IMainDataDay[]>([]);
   const [displayedDaysFrame, setDisplayedDaysFrame] = useState<DisplayedDaysFrame>([0, 0]);
   const [displayedDays, setDisplayedDays] = useState<Day[]>([]);
   const [selectedDay, setSelectedDay] = useState('');
+
+  const dispatch: AppDispatch = useDispatch();
 
   const createStartWeekFrame = (): void => {
     const currentDate: string = getCurrentTime('date');
@@ -44,6 +50,7 @@ const LineearCalendar: React.FC = () => {
 
   const changeSelectedDay = (day: string): void => {
     setSelectedDay(day);
+    dispatch(setCurrentDay({ day: day }));
   };
 
   const handleDisplayedDays = () => {
@@ -52,10 +59,6 @@ const LineearCalendar: React.FC = () => {
 
     setDisplayedDays(daysOfYear.slice(startDisplayedDay - 1, endDisplayedDay));
   };
-
-  // useEffect(() => {
-  //   setDaysOfYear(generateYearArray());
-  // }, []);
 
   useEffect(() => {
     if (daysOfYear.length > 0) {
@@ -68,7 +71,9 @@ const LineearCalendar: React.FC = () => {
   }, [displayedDaysFrame]);
 
   useEffect(() => {
-    setSelectedDay(getCurrentTime('date'));
+    const day = getCurrentTime('date');
+    setSelectedDay(day);
+    dispatch(setCurrentDay({ day: day }));
   }, []);
 
   useEffect(() => {
@@ -76,12 +81,23 @@ const LineearCalendar: React.FC = () => {
   }, [selectedDay]);
 
   useEffect(() => {
-    console.log(mainData);
     if (mainData) {
       const dataForCurrentYear = mainData['2023'];
       setDaysOfYear(dataForCurrentYear);
     }
   }, [mainData]);
+
+  useEffect(() => {
+    if (mainData && currentYear) {
+      const curentYearData = mainData[currentYear];
+      if (currentDay) {
+        const foundedDay = curentYearData.find(day => day.date === currentDay);
+        if (foundedDay?.habits) {
+          dispatch(setDayHabits(foundedDay.habits));
+        }
+      }
+    }
+  }, [mainData, currentDay, currentYear]);
 
   return (
     <LinearCalendarStyled>

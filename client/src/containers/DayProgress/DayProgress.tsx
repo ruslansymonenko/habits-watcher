@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+
+import { RootState, AppDispatch } from '../../store';
 
 import { data, testHabits } from '../../helpers/dataForTests';
 
@@ -13,6 +16,7 @@ import {
 } from './styled';
 
 const DayProgress: React.FC = () => {
+  const dayHabits = useSelector((state: RootState) => state.mainData.currentDayHabits);
   const [doughnutData, setDoughnutData] = useState({
     labels: ['Progress', 'Day'],
     datasets: [
@@ -78,12 +82,16 @@ const DayProgress: React.FC = () => {
   return (
     <DayProgressStyled>
       <DayProgressSection className="day-progress__habits">
-        {testHabits.map((habit, index) => (
-          <DayProgressHabit key={index}>
-            <DayProgressHabitColor $color={habit.color} />
-            <DayProgressHabitName>{habit.name}</DayProgressHabitName>
-          </DayProgressHabit>
-        ))}
+        {dayHabits ? (
+          dayHabits.map((habit, index) => (
+            <DayProgressHabit key={index}>
+              <DayProgressHabitColor $color={habit.color} />
+              <DayProgressHabitName>{habit.title}</DayProgressHabitName>
+            </DayProgressHabit>
+          ))
+        ) : (
+          <div>No habits for today</div>
+        )}
       </DayProgressSection>
       <DayProgressSection className="day-progress__circle">
         <Doughnut

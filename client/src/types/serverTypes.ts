@@ -24,12 +24,17 @@ export interface IServerAuthResponse {
 //Main Data
 export type Year = string;
 export type YearData = IMainDataDay[];
+
+export type WeekDays = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
 export interface IMainDataHabit {
-  name: string;
-  icon: string;
-  condition: string;
+  title: string;
+  habit_condition: string;
   color: string;
-  status: boolean;
+  user_id: string;
+  week_days: WeekDays[];
+  habit_day_start: string;
+  habit_icon: string;
 }
 
 export interface IMainDataDay {

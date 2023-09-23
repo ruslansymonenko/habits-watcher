@@ -9,8 +9,7 @@ export const DayHabitStyled = styled.div<{ $color: string; $isDone: boolean }>`
   box-shadow: 1px 1px 19px -12px black;
   border-radius: 10px;
   padding: ${indents.indent_1}px;
-  background-color: ${({ $color, $isDone }) =>
-    $isDone ? `${colors.inActive}` : `${colors[$color]}`};
+  background-color: ${({ $color, $isDone }) => ($isDone ? `${colors.inActive}` : `${$color}`)};
   cursor: pointer;
   transition: 0.4s ease;
 

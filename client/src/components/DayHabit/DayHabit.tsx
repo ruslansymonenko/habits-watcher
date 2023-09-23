@@ -14,29 +14,25 @@ import {
 import checkImageInActive from '../../assets/icons/check-inActive.svg';
 import checkImageActive from '../../assets/icons/check-active.svg';
 
-interface IDayHabit {
-  name: string;
-  habitCondition: string;
-  bgColor: string;
-  image: string;
-  isDone: boolean;
-}
+import { IMainDataHabit } from '../../types/serverTypes';
 
-const DayHabit: React.FC<IDayHabit> = ({ name, habitCondition, bgColor, image, isDone }) => {
+const DayHabit: React.FC<IMainDataHabit> = ({ title, habit_condition, color, habit_icon }) => {
+  const IsDone = false;
+
   return (
     <DayHabitStyled
-      $color={bgColor}
-      $isDone={isDone}
+      $color={color}
+      $isDone={IsDone}
     >
       <DayHabitImgContainer>
-        <DayHabitImg src={image} />
+        <DayHabitImg src={habit_icon} />
       </DayHabitImgContainer>
       <DayHabitInfo>
-        <DayHabitName $isDone={isDone}>{name}</DayHabitName>
-        <DayHabitCondition>{habitCondition}</DayHabitCondition>
+        <DayHabitName $isDone={false}>{title}</DayHabitName>
+        <DayHabitCondition>{habit_condition}</DayHabitCondition>
       </DayHabitInfo>
       <DyaHabitStatus>
-        <DyaHabitStatusImg src={isDone ? checkImageActive : checkImageInActive} />
+        <DyaHabitStatusImg src={IsDone ? checkImageActive : checkImageInActive} />
       </DyaHabitStatus>
     </DayHabitStyled>
   );

@@ -71,7 +71,7 @@ export const DayProgressHabitColor = styled.div<{ $color: string }>`
   height: 15px;
   width: 15px;
   border-radius: 50%;
-  background-color: ${({ $color }) => `${colors[$color]}`};
+  background-color: ${({ $color }) => `${$color}`};
   margin-right: ${indents.indent_2}px;
 
   @media (max-width: 400px) {
