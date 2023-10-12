@@ -39,6 +39,7 @@ export interface IMainDataHabit {
   week_days: WeekDays[];
   habit_day_start: string;
   habit_icon: string;
+  is_done: boolean;
 }
 
 export interface IMainDataDay {

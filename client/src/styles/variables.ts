@@ -18,7 +18,7 @@ export const colors: { [k: string]: string } = {
   habit_6: '#ff7675',
   habit_7: '#fd79a8',
   habit_8: '#d63031',
-  habit_9: '##a29bfe',
+  habit_9: '#a29bfe',
   habit_10: '#fd79a8',
 };
 

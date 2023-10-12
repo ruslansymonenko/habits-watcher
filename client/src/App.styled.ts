@@ -83,6 +83,10 @@ export const AppStyles = createGlobalStyle`
   font-style: normal;
   }
 
+  .App {
+    position: relative;
+  }
+
   .layout-content{
     display: flex;
     align-items: center;

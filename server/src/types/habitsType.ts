@@ -9,12 +9,9 @@ export interface IHabit {
   week_days: WeekDays[];
   habit_day_start: string;
   habit_icon: string;
+  created_date: string;
+  is_done: boolean;
 }
-
-// export interface IHabitResponse {
-//   isDone: boolean;
-//   statusMessage: string | null;
-// }
 
 export interface IHabitResponse {
   isDone: boolean;
