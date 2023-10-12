@@ -8,7 +8,7 @@ const habitsRouter: Router = Router();
 
 habitsRouter.post('/create', checkAuth, createHabit);
 
-habitsRouter.get('gethabits', checkAuth, getHabits);
+habitsRouter.get('/gethabits', checkAuth, getHabits);
 
 habitsRouter.put('/update', checkAuth, updateHabit);
 

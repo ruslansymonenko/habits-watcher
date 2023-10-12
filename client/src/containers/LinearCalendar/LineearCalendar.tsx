@@ -20,14 +20,14 @@ type changeDayFrame = 'prev' | 'next';
 
 const LineearCalendar: React.FC = () => {
   const mainData = useSelector((state: RootState) => state.mainData.mainData);
-  const currentDay = useSelector((state: RootState) => state.mainData.currentDay);
-  const currentYear = useSelector((state: RootState) => state.mainData.currentYear);
-  const currentDayHabits = useSelector((state: RootState) => state.mainData.currentDayHabits);
 
   const [daysOfYear, setDaysOfYear] = useState<IMainDataDay[]>([]);
   const [displayedDaysFrame, setDisplayedDaysFrame] = useState<DisplayedDaysFrame>([0, 0]);
   const [displayedDays, setDisplayedDays] = useState<Day[]>([]);
   const [selectedDay, setSelectedDay] = useState('');
+
+  const currentDay = useSelector((state: RootState) => state.mainData.currentDay);
+  const currentYear = useSelector((state: RootState) => state.mainData.currentYear);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -88,12 +88,18 @@ const LineearCalendar: React.FC = () => {
   }, [mainData]);
 
   useEffect(() => {
+    console.log(mainData);
+  }, [mainData]);
+
+  useEffect(() => {
     if (mainData && currentYear) {
       const curentYearData = mainData[currentYear];
       if (currentDay) {
         const foundedDay = curentYearData.find(day => day.date === currentDay);
         if (foundedDay?.habits) {
           dispatch(setDayHabits(foundedDay.habits));
+        } else {
+          dispatch(setDayHabits(null));
         }
       }
     }

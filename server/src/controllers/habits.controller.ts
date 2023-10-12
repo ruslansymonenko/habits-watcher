@@ -5,6 +5,7 @@ import { IHabitResponse } from '../types/habitsType';
 import { loggerService } from '../services/logger.service';
 
 import { createNewHabit } from '../services/habits-services/createHabit.service';
+import { getUserHabits } from '../services/habits-services/getUserHabits.service';
 
 export const createHabit = async (req: CustomRequestWithID, res: Response): Promise<Response> => {
   try {
@@ -15,6 +16,7 @@ export const createHabit = async (req: CustomRequestWithID, res: Response): Prom
       const response: IHabitResponse = {
         isDone: false,
         statusMessage: 'Not correct data',
+        data: null,
       };
       loggerService('error', 'Not correct data for creating habit');
       return res.json(response);
@@ -34,6 +36,7 @@ export const createHabit = async (req: CustomRequestWithID, res: Response): Prom
       const response: IHabitResponse = {
         isDone: false,
         statusMessage: 'Not correct week days',
+        data: null,
       };
       return res.json(response);
     }
@@ -59,12 +62,14 @@ export const createHabit = async (req: CustomRequestWithID, res: Response): Prom
       const response: IHabitResponse = {
         isDone: newHabit.isDone,
         statusMessage: newHabit.statusMessage,
+        data: newHabit.data,
       };
       return res.json(response);
     } else {
       const response: IHabitResponse = {
         isDone: false,
         statusMessage: 'Not correct data types',
+        data: null,
       };
       return res.json(response);
     }
@@ -72,16 +77,43 @@ export const createHabit = async (req: CustomRequestWithID, res: Response): Prom
     const response: IHabitResponse = {
       isDone: false,
       statusMessage: 'Server error, please, try later',
+      data: null,
     };
     loggerService('error', `${error}`);
     return res.json(response);
   }
 };
 
-export const getHabits = (req: CustomRequestWithID, res: Response): Response => {
-  return res.json({
-    message: 'hello',
-  });
+export const getHabits = async (req: CustomRequestWithID, res: Response): Promise<Response> => {
+  try {
+    const userId = req.userId;
+
+    if (userId) {
+      const databaseResponse = await getUserHabits({ user_id: userId });
+      const response: IHabitResponse = {
+        isDone: databaseResponse.isDone,
+        statusMessage: databaseResponse.statusMessage,
+        data: databaseResponse.data,
+      };
+      return res.json(response);
+    } else {
+      const response: IHabitResponse = {
+        isDone: false,
+        statusMessage: 'User Id was not founded',
+        data: null,
+      };
+
+      return res.json(response);
+    }
+  } catch (error) {
+    const response: IHabitResponse = {
+      isDone: false,
+      statusMessage: `${error}`,
+      data: null,
+    };
+
+    return res.json(response);
+  }
 };
 
 export const updateHabit = (req: Request, res: Response): Response => {

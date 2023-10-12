@@ -1,19 +1,13 @@
+import { IHabit } from './habitsType';
+
 type Year = string;
 export type YearData = IMainDataDay[];
-
-export interface IMainDataHabit {
-  name: string;
-  icon: string;
-  condition: string;
-  color: string;
-  status: boolean;
-}
 
 export interface IMainDataDay {
   date: string;
   dayOfTheWeek: string;
   dayOfWeekNumber: number;
-  habits: IMainDataHabit[] | null;
+  habits: IHabit[] | null;
 }
 
 export interface IMainDataResponse {

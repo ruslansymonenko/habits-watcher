@@ -12,6 +12,7 @@ export const createNewHabit = async ({
 }: IHabit): Promise<IHabitResponse> => {
   const result: IHabitResponse = {
     isDone: false,
+    data: null,
     statusMessage: null,
   };
 

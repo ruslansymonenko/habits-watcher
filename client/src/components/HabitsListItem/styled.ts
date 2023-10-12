@@ -19,6 +19,10 @@ export const HabitsListItemTitle = styled.span`
   display: block;
 `;
 
+export const HabitsListItemDate = styled.span`
+  display: block;
+`;
+
 export const HabitsListItemBtns = styled.div`
   display: flex;
   align-items: center;

@@ -63,7 +63,7 @@ const mainDataSlice = createSlice({
     setCurrentDay: (state: IMainDataSlice, action: PayloadAction<IDay>) => {
       state.currentDay = action.payload.day;
     },
-    setDayHabits: (state: IMainDataSlice, action: PayloadAction<IMainDataHabit[]>) => {
+    setDayHabits: (state: IMainDataSlice, action: PayloadAction<IMainDataHabit[] | null>) => {
       state.currentDayHabits = action.payload;
     },
   },

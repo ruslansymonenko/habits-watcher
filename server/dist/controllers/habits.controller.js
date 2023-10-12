@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteHabit = exports.updateHabit = exports.getHabits = exports.createHabit = void 0;
 const logger_service_1 = require("../services/logger.service");
 const createHabit_service_1 = require("../services/habits-services/createHabit.service");
+const getUserHabits_service_1 = require("../services/habits-services/getUserHabits.service");
 const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -21,6 +22,7 @@ const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             const response = {
                 isDone: false,
                 statusMessage: 'Not correct data',
+                data: null,
             };
             (0, logger_service_1.loggerService)('error', 'Not correct data for creating habit');
             return res.json(response);
@@ -38,6 +40,7 @@ const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             const response = {
                 isDone: false,
                 statusMessage: 'Not correct week days',
+                data: null,
             };
             return res.json(response);
         }
@@ -59,6 +62,7 @@ const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             const response = {
                 isDone: newHabit.isDone,
                 statusMessage: newHabit.statusMessage,
+                data: newHabit.data,
             };
             return res.json(response);
         }
@@ -66,6 +70,7 @@ const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             const response = {
                 isDone: false,
                 statusMessage: 'Not correct data types',
+                data: null,
             };
             return res.json(response);
         }
@@ -74,17 +79,43 @@ const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const response = {
             isDone: false,
             statusMessage: 'Server error, please, try later',
+            data: null,
         };
         (0, logger_service_1.loggerService)('error', `${error}`);
         return res.json(response);
     }
 });
 exports.createHabit = createHabit;
-const getHabits = (req, res) => {
-    return res.json({
-        message: 'hello',
-    });
-};
+const getHabits = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.userId;
+        if (userId) {
+            const databaseResponse = yield (0, getUserHabits_service_1.getUserHabits)({ user_id: userId });
+            const response = {
+                isDone: databaseResponse.isDone,
+                statusMessage: databaseResponse.statusMessage,
+                data: databaseResponse.data,
+            };
+            return res.json(response);
+        }
+        else {
+            const response = {
+                isDone: false,
+                statusMessage: 'User Id was not founded',
+                data: null,
+            };
+            return res.json(response);
+        }
+    }
+    catch (error) {
+        const response = {
+            isDone: false,
+            statusMessage: `${error}`,
+            data: null,
+        };
+        return res.json(response);
+    }
+});
 exports.getHabits = getHabits;
 const updateHabit = (req, res) => {
     return res.json({

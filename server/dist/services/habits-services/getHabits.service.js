@@ -12,37 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createNewHabit = void 0;
+exports.getUserHabits = void 0;
 const database_1 = __importDefault(require("../../database/database"));
-const createNewHabit = ({ title, habit_condition, color, user_id, week_days, habit_day_start, habit_icon, }) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = {
+const getUserHabits = ({ user_id }) => __awaiter(void 0, void 0, void 0, function* () {
+    const response = {
         isDone: false,
-        data: null,
         statusMessage: null,
+        data: null,
     };
     try {
-        const query = `
-      INSERT INTO habits (title, habit_condition, color, user_id, week_days, habit_day_start, habit_icon)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
-      RETURNING *;
-    `;
-        const values = [title, habit_condition, color, user_id, week_days, habit_day_start, habit_icon];
-        const newHabit = yield database_1.default.query(query, values);
-        if (newHabit.rows.length > 0) {
-            result.isDone = true;
-            result.statusMessage = 'Habit created successfully';
-            return result;
-        }
-        else {
-            result.isDone = false;
-            result.statusMessage = 'Habit creation error';
-            return result;
-        }
+        const habitsData = database_1.default.query('SELECT * FROM habits WHERE user_id = $1;', [user_id]);
+        console.log(habitsData);
+        return response;
     }
     catch (error) {
-        result.isDone = false;
-        result.statusMessage = `${error}`;
-        return result;
+        return response;
     }
 });
-exports.createNewHabit = createNewHabit;
+exports.getUserHabits = getUserHabits;
