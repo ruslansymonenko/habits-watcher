@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface IModalStatusSlice {
   newHabitModalStatus: boolean;
@@ -11,7 +11,16 @@ const initialState: IModalStatusSlice = {
 const modalStatusSlice = createSlice({
   name: 'modalStatus',
   initialState,
-  reducers: {},
+  reducers: {
+    closeNewHabitModal: (state: IModalStatusSlice) => {
+      state.newHabitModalStatus = false;
+    },
+    openNewHabitModal: (state: IModalStatusSlice) => {
+      state.newHabitModalStatus = true;
+    },
+  },
 });
+
+export const { openNewHabitModal, closeNewHabitModal } = modalStatusSlice.actions;
 
 export default modalStatusSlice.reducer;

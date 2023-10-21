@@ -7,8 +7,6 @@ import { AppRouter } from './router/Router';
 import { checkIsAuth, getUser } from './store/slices/userSlices/authSlice';
 import { getMainData, setCurrentYear } from './store/slices/dataSlices/mainDataSlice';
 
-import NewHabitModal from './containers/NewHabitModal/NewHabitModal';
-
 import { AppStyles } from './App.styled';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -37,7 +35,6 @@ function App() {
       </div>
 
       <ToastContainer position="bottom-right" />
-      <NewHabitModal />
     </>
   );
 }

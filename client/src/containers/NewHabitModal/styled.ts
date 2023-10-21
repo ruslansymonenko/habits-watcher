@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 import { Z_INDEX_LEVEL_3 } from '../../styles/consts';
-import { indents } from '../../styles/variables';
+import { indents, colors } from '../../styles/variables';
 
-export const NewHabitModalStyled = styled.div`
+export const NewHabitModalStyled = styled.div<{ $isActive: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -13,8 +13,8 @@ export const NewHabitModalStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 1;
-  visibility: visible;
+  opacity: ${({ $isActive }) => ($isActive ? `1` : `0`)};
+  visibility: ${({ $isActive }) => ($isActive ? `visible` : `hidden`)};
   transition: 0.5s ease;
   z-index: ${Z_INDEX_LEVEL_3};
 `;
@@ -39,6 +39,18 @@ export const NewHabitInputContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 5px;
+
+  .newhabit-datepicker {
+    border: none;
+    box-shadow: 0px 0px 5px -2px black;
+    padding: 4px;
+    border-radius: 3px;
+
+    &:focus {
+      outline: none;
+    }
+  }
 `;
 
 export const NewHabitInputName = styled.label`
@@ -67,6 +79,7 @@ export const NewHabitColor = styled.div<{ $bgColor: string }>`
   width: 30px;
   margin: 2px;
   box-shadow: 0px 0px 5px -3px black;
+  border-radius: 3px;
   cursor: pointer;
   background-color: ${({ $bgColor }) => $bgColor};
   transition: 0.3s;
@@ -74,6 +87,47 @@ export const NewHabitColor = styled.div<{ $bgColor: string }>`
   &:hover {
     transform: scale(1.03);
   }
+`;
+
+export const NewHabitDaysContainer = styled.div`
+  display: flex;
+  margin: 5px 0px;
+`;
+
+export const NewHabitDay = styled.div<{ $isAcive: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  margin: 2px;
+  box-shadow: 0px 0px 5px -3px black;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: ${({ $isAcive }) =>
+    $isAcive ? `${colors.primary}` : `${colors.mediumBackground}`};
+  transition: 0.3s;
+`;
+
+export const NewHabitModalCloseBtn = styled.button`
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 2%;
+  right: 2%;
+  background-color: transparent;
+  box-shadow: 0px 0px 5px -3px black;
+  border-radius: 3px;
+  cursor: pointer;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+`;
+
+export const NewHabitDayText = styled.span`
+  font-weight: 600;
 `;
 
 export const NewHabitModalBtns = styled.div``;

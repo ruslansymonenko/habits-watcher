@@ -1,5 +1,16 @@
 import { IHabit, IHabitResponse } from '../../types/habitsType';
 import database from '../../database/database';
+import { WeekDays } from '../../types/habitsType';
+
+interface ICreateNewHabitProps {
+  title: string;
+  habit_condition: string;
+  color: string;
+  user_id: string;
+  week_days: WeekDays[];
+  habit_day_start: string;
+  habit_icon: string;
+}
 
 export const createNewHabit = async ({
   title,
@@ -9,7 +20,7 @@ export const createNewHabit = async ({
   week_days,
   habit_day_start,
   habit_icon,
-}: IHabit): Promise<IHabitResponse> => {
+}: ICreateNewHabitProps): Promise<IHabitResponse> => {
   const result: IHabitResponse = {
     isDone: false,
     data: null,
