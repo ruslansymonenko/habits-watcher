@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
 import DatePicker from 'react-datepicker';
+import { toast } from 'react-toastify';
 
+import { createNewHabit } from '../../store/slices/habitsSlice/habitsSlice';
 import { closeNewHabitModal } from '../../store/slices/modalStatusSlice/modalStatusSlice';
+import { clearStatus } from '../../store/slices/habitsSlice/habitsSlice';
 
 import Button from '../../components/Button/Button';
 
@@ -28,6 +31,7 @@ import {
 import 'react-datepicker/dist/react-datepicker.css';
 
 import closeImg from '../../assets/icons/action-icons/close.svg';
+import { title } from 'process';
 
 interface INewHabitModalProps {
   isActive: boolean;
@@ -35,6 +39,7 @@ interface INewHabitModalProps {
 
 const NewHabitModal: React.FC<INewHabitModalProps> = ({ isActive }) => {
   const dispatch: AppDispatch = useDispatch();
+  const creatingHabitsStatus = useSelector((state: RootState) => state.habits.status);
 
   const habitsColors: string[] = [
     colors.habit_1,
@@ -99,12 +104,46 @@ const NewHabitModal: React.FC<INewHabitModalProps> = ({ isActive }) => {
     setSelectedStartDate(formattedDate);
   };
 
-  const handleCancel = () => {
+  const clearModal = () => {
     setSelectedColor('#55efc4');
     setSelectedTitle('');
     setSelectedCondition('');
     setSelectedDays([]);
     setStartDate(null);
+  };
+
+  const handleCancel = () => {
+    clearModal();
+  };
+
+  const handleConfirm = () => {
+    if (selectedTitle && selectedCondition && selectedDays && selectedStartDate) {
+      const newHabitData = {
+        title: selectedTitle,
+        condition: selectedCondition,
+        color: selectedColor,
+        days: selectedDays,
+        startDate: selectedStartDate,
+      };
+
+      dispatch(
+        createNewHabit({
+          title: newHabitData.title,
+          habit_condition: newHabitData.condition,
+          color: newHabitData.color,
+          week_days: newHabitData.days,
+          habit_day_start: newHabitData.startDate,
+          habit_icon: '',
+        }),
+      );
+      clearModal();
+      dispatch(closeNewHabitModal());
+      setTimeout(() => {
+        dispatch(clearStatus());
+      }, 1000);
+    } else {
+      toast.error('Please, fill all inputs');
+    }
   };
 
   const closeModal = () => {
@@ -114,6 +153,12 @@ const NewHabitModal: React.FC<INewHabitModalProps> = ({ isActive }) => {
   useEffect(() => {
     handleSlectedStartDate(startDate);
   }, [startDate]);
+
+  useEffect(() => {
+    if (creatingHabitsStatus) {
+      toast.success(creatingHabitsStatus);
+    }
+  }, [creatingHabitsStatus]);
 
   return (
     <NewHabitModalStyled $isActive={isActive}>
@@ -178,6 +223,7 @@ const NewHabitModal: React.FC<INewHabitModalProps> = ({ isActive }) => {
           <Button
             $type="primary"
             text="Add"
+            handleClick={handleConfirm}
           />
           <Button
             $type="accent"
