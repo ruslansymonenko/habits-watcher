@@ -6,6 +6,7 @@ import { loggerService } from '../services/logger.service';
 
 import { createNewHabit } from '../services/habits-services/createHabit.service';
 import { getUserHabits } from '../services/habits-services/getUserHabits.service';
+import { deleteHabitService } from '../services/habits-services/deleteHabit.service';
 
 export const createHabit = async (req: CustomRequestWithID, res: Response): Promise<Response> => {
   try {
@@ -116,14 +117,43 @@ export const getHabits = async (req: CustomRequestWithID, res: Response): Promis
   }
 };
 
-export const updateHabit = (req: Request, res: Response): Response => {
+export const updateHabit = (req: CustomRequestWithID, res: Response): Response => {
   return res.json({
     message: 'update',
   });
 };
 
-export const deleteHabit = (req: Request, res: Response): Response => {
-  return res.json({
-    message: 'delete',
-  });
+export const deleteHabit = async (req: CustomRequestWithID, res: Response): Promise<Response> => {
+  try {
+    const userId = req.userId?.toString();
+    const habitId = req.params.id;
+
+    if (userId && habitId) {
+      const serviceResponse = await deleteHabitService({ userId: userId, habitId: habitId });
+
+      const response: IHabitResponse = {
+        isDone: serviceResponse.isDone,
+        statusMessage: serviceResponse.statusMessage,
+        data: null,
+      };
+
+      return res.json(response);
+    } else {
+      const response: IHabitResponse = {
+        isDone: false,
+        statusMessage: 'No user id or habit id',
+        data: null,
+      };
+
+      return res.json(response);
+    }
+  } catch (error) {
+    const response: IHabitResponse = {
+      isDone: false,
+      statusMessage: `${error}`,
+      data: null,
+    };
+
+    return res.json(response);
+  }
 };

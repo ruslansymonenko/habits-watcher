@@ -13,6 +13,7 @@ exports.deleteHabit = exports.updateHabit = exports.getHabits = exports.createHa
 const logger_service_1 = require("../services/logger.service");
 const createHabit_service_1 = require("../services/habits-services/createHabit.service");
 const getUserHabits_service_1 = require("../services/habits-services/getUserHabits.service");
+const deleteHabit_service_1 = require("../services/habits-services/deleteHabit.service");
 const createHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -123,9 +124,36 @@ const updateHabit = (req, res) => {
     });
 };
 exports.updateHabit = updateHabit;
-const deleteHabit = (req, res) => {
-    return res.json({
-        message: 'delete',
-    });
-};
+const deleteHabit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
+    try {
+        const userId = (_b = req.userId) === null || _b === void 0 ? void 0 : _b.toString();
+        const habitId = req.params.id;
+        if (userId && habitId) {
+            const serviceResponse = yield (0, deleteHabit_service_1.deleteHabitService)({ userId: userId, habitId: habitId });
+            const response = {
+                isDone: serviceResponse.isDone,
+                statusMessage: serviceResponse.statusMessage,
+                data: null,
+            };
+            return res.json(response);
+        }
+        else {
+            const response = {
+                isDone: false,
+                statusMessage: 'No user id or habit id',
+                data: null,
+            };
+            return res.json(response);
+        }
+    }
+    catch (error) {
+        const response = {
+            isDone: false,
+            statusMessage: `${error}`,
+            data: null,
+        };
+        return res.json(response);
+    }
+});
 exports.deleteHabit = deleteHabit;

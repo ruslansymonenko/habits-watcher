@@ -10,8 +10,8 @@ habitsRouter.post('/create', checkAuth, createHabit);
 
 habitsRouter.get('/gethabits', checkAuth, getHabits);
 
-habitsRouter.put('/update', checkAuth, updateHabit);
+habitsRouter.put('/update/:id', checkAuth, updateHabit);
 
-habitsRouter.post('/delete', checkAuth, deleteHabit);
+habitsRouter.delete('/delete/:id', checkAuth, deleteHabit);
 
 export default habitsRouter;
